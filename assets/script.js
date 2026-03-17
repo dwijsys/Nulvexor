@@ -17,6 +17,7 @@ const sendBtn            = document.getElementById('sendBtn');
 const agentsList         = document.getElementById('agentsList');
 const mobileMenuToggle   = document.getElementById('mobileMenuToggle');
 const mobileSidebar      = document.getElementById('mobileSidebar');
+const keyError           = document.getElementById('keyError');
 
 // ── State ─────────────────────────────────────────────────────────────────────
 const displayedMessageIds = new Set();
@@ -33,12 +34,6 @@ const messageExpiries     = new Map(); // msgId -> expiryTime (unix)
 let CURRENT_USER_ID = sessionStorage.getItem('nulv_uid') ||
     ('agent_' + Math.random().toString(36).slice(2, 9) + Date.now().toString(36));
 sessionStorage.setItem('nulv_uid', CURRENT_USER_ID);
-
-// ── Audio Assets ──────────────────────────────────────────────────────────────
-const sendSound    = new Audio('https://assets.mixkit.co/active_storage/sfx/2351/2351-preview.mp3'); // Electronic short thud
-const receiveSound = new Audio('https://assets.mixkit.co/active_storage/sfx/2352/2352-preview.mp3'); // Deep tech blip
-sendSound.volume   = 0.25;
-receiveSound.volume = 0.25;
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
 /**
@@ -97,6 +92,38 @@ function showNotification(message, type = 'info', target = null) {
         notif.classList.remove('show');
         setTimeout(() => notif.remove(), 400);
     }, target ? 2000 : 4000);
+
+    // Global Notification Sync with Ambient Glow
+    if (!target) {
+        if (type === 'error') triggerGlowState('error');
+        if (type === 'warning') triggerGlowState('warning'); // Optionally we can add a warning state to ambient
+    }
+}
+
+/**
+ * Ambient Cinematic Glow Controller (Cyberpunk/NSA-Grade)
+ */
+let glowRevertTimeout = null;
+
+function triggerGlowState(state) {
+    const wrapper = document.querySelector('.glow-ambient-wrapper');
+    if (!wrapper) return;
+
+    // Clear any existing reset timer
+    clearTimeout(glowRevertTimeout);
+    
+    // Reset to idle before applying new state
+    wrapper.classList.remove('state-sending', 'state-receiving', 'state-error');
+    
+    // Apply state if not aiming for default
+    if (state !== 'default') {
+        wrapper.classList.add(`state-${state}`);
+        
+        // Auto-revert back to default deep blue trace after 3 seconds
+        glowRevertTimeout = setTimeout(() => {
+            wrapper.classList.remove(`state-${state}`);
+        }, 3000);
+    }
 }
 
 function escapeHtml(str) {
@@ -285,7 +312,7 @@ async function renderMessage(msg) {
 
     // Play sound for incoming messages (new ones only)
     if (!isMine && displayedMessageIds.size > 1) {
-        receiveSound.play().catch(() => {});
+        triggerGlowState('receiving'); // Trigger green glow on receive
     }
 }
 
@@ -306,9 +333,14 @@ secretMessageForm?.addEventListener('submit', async (e) => {
 
     if (!key) {
         sharedKeyInput.focus();
-        sharedKeyInput.classList.add('ring-2', 'ring-indigo-500/50', 'animate-shake');
+        sharedKeyInput.classList.add('auth-fail-effect', 'animate-shake');
+        keyError?.classList.remove('hidden');
         showNotification('Shared key missing', 'warning', sharedKeyInput.parentElement);
-        setTimeout(() => sharedKeyInput.classList.remove('ring-2', 'ring-indigo-500/50', 'animate-shake'), 1200);
+        triggerGlowState('error'); 
+        
+        setTimeout(() => {
+            sharedKeyInput.classList.remove('animate-shake');
+        }, 1200);
         return;
     }
 
@@ -332,17 +364,19 @@ secretMessageForm?.addEventListener('submit', async (e) => {
         const data = await res.json();
         
         if (data.status === 'success') {
-            sendSound.play().catch(() => {});
+            triggerGlowState('sending'); // Trigger blue glow on send
             messageInput.value = '';
             sharedKeyInput.value = ''; // FORCE SENDER TO RE-ENTER (Both must enter)
             validateInputs();
             fetchMessages();
         } else {
             showNotification('SEND FAILED: ' + data.message, 'error');
+            triggerGlowState('error'); // Trigger red glow on error
         }
     } catch (e) {
         console.error('[SEND-ERR]', e);
         showNotification('ENCRYPTION ERROR: ' + e.message + '\n\nEnsure you are using HTTPS or localhost.', 'error');
+        triggerGlowState('error'); // Trigger red glow on error
         validateInputs();
     }
 });
@@ -386,7 +420,15 @@ messagesArea?.addEventListener('click', async e => {
                 </div>
             `;
             const input = area.querySelector('.inline-key-input');
+            const btn = area.querySelector('.inline-confirm-btn');
             input.focus();
+
+            // Clear error on type
+            input.addEventListener('input', () => {
+                input.classList.remove('auth-fail-effect');
+                btn?.classList.remove('auth-fail-btn');
+                area.querySelector('.error-msg')?.classList.add('hidden');
+            });
             
             // Handle 'Enter' inside the tiny input
             input.addEventListener('keydown', ek => {
@@ -415,8 +457,12 @@ messagesArea?.addEventListener('click', async e => {
                 const input = container.querySelector('.inline-key-input');
                 const errorLabel = container.querySelector('.error-msg');
                 
-                input.classList.add('error');
+                const btn = container.querySelector('.inline-confirm-btn');
+                
+                input.classList.add('auth-fail-effect');
+                btn?.classList.add('auth-fail-btn');
                 errorLabel.classList.remove('hidden');
+                triggerGlowState('error');
                 
                 // Shake effect
                 container.classList.add('animate-shake');
@@ -451,7 +497,9 @@ messagesArea?.addEventListener('click', async e => {
 
 sharedKeyInput?.addEventListener('input', () => {
     validateInputs();
-    // No longer auto-refreshing here to keep things "ciphered" until clicked
+    // Clear error state on type
+    keyError?.classList.add('hidden');
+    sharedKeyInput?.classList.remove('auth-fail-effect');
 });
 
 messageInput?.addEventListener('input', validateInputs);

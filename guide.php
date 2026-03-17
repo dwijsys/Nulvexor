@@ -20,7 +20,7 @@
         }
         .step-card:hover {
             transform: translateY(-4px) scale(1.01) !important;
-            border-color: var(--accent-blue) !important;
+            border-color: #6366f1 !important;
             background: #0d0d12 !important;
             box-shadow: 0 0 30px rgba(99, 102, 241, 0.4) !important;
         }
@@ -34,9 +34,18 @@
         .glow-text {
             text-shadow: 0 0 20px rgba(99, 102, 241, 0.5);
         }
+        .status-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 8px;
+        }
     </style>
 </head>
 <body class="bg-[#07070a] text-gray-300 min-h-screen guide-gradient overflow-x-hidden">
+    <!-- Premium Ambient Glow System -->
+    <div class="glow-ambient-wrapper"></div>
     
     <!-- Header -->
     <header class="py-12 px-6 border-b border-white/5 bg-black/40 backdrop-blur-md sticky top-0 z-50">
@@ -46,10 +55,6 @@
                 <span class="text-xl font-bold tracking-tighter text-white">NULVEXOR <span class="text-indigo-400 font-light ml-2">GUIDE</span></span>
             </a>
             <div class="flex items-center gap-4">
-                <a href="https://github.com/dwijsys" target="_blank" class="flex items-center gap-2 px-5 py-2.5 bg-indigo-500/10 border border-indigo-500/30 text-white font-bold rounded-full hover:bg-indigo-600 hover:border-indigo-400 hover:shadow-[0_0_20px_rgba(99,102,241,0.4)] transition-all uppercase tracking-widest text-xs group">
-                    <svg class="w-4 h-4 text-indigo-400 group-hover:text-white transition-colors" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.008.069-.008 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clip-rule="evenodd" /></svg>
-                    <span class="hidden sm:inline">GitHub</span>
-                </a>
                 <a href="./" class="text-sm font-bold text-gray-500 hover:text-white transition-colors uppercase tracking-widest flex items-center gap-2">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
                     Return to Grid
@@ -65,48 +70,87 @@
                 Operational <span class="text-indigo-400">Manual</span>
             </h1>
             <p class="text-xl text-gray-500 max-w-2xl mx-auto leading-relaxed">
-                Complete intelligence on establishing secure uplinks, managing cryptographic keys, and utilizing agency-grade protocols.
+                Everything you need to know about navigating the Nulvexor secure grid, visual state indicators, and encryption flows.
             </p>
         </div>
 
-        <!-- Section 1: Quick Setup -->
+        <!-- Section 1: Connection Protocol (Simplified) -->
         <div class="mb-32">
             <div class="flex items-center gap-4 mb-12">
                 <div class="h-px flex-1 bg-gradient-to-r from-transparent to-white/5"></div>
-                <h2 class="text-2xl font-bold text-white uppercase tracking-widest shrink-0">01. Connection Protocol</h2>
+                <h2 class="text-2xl font-bold text-white uppercase tracking-widest shrink-0">01. Getting Started</h2>
                 <div class="h-px flex-1 bg-gradient-to-l from-transparent to-white/5"></div>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 <!-- Step 1 -->
-                <div class="step-card p-8 rounded-3xl bg-white/5 relative overflow-hidden group">
-                    <div class="text-7xl font-black text-indigo-400 absolute top-2 right-4 opacity-[0.02] blur-md group-hover:opacity-100 group-hover:blur-none transition-all duration-700 select-none pointer-events-none">1</div>
-                    <div class="w-12 h-12 rounded-xl bg-indigo-500/10 flex items-center justify-center text-indigo-400 mb-6 font-bold">A</div>
-                    <h3 class="text-xl font-bold text-white mb-4">Initialize Connection</h3>
-                    <p class="text-sm text-gray-500 leading-relaxed">Create an ephemeral room to generate a 6-character code, or join an existing session by entering a code shared by your contact. An Alias is required for identification.</p>
+                <div class="step-card p-6 rounded-3xl bg-white/5 relative overflow-hidden group">
+                    <div class="w-10 h-10 rounded-xl bg-indigo-500/10 flex items-center justify-center text-indigo-400 mb-6 font-bold">1</div>
+                    <h3 class="text-lg font-bold text-white mb-2 uppercase">Initial Uplink</h3>
+                    <p class="text-sm text-gray-500 leading-relaxed">Choose an "Alias" (your temporary name) and either <strong>Create</strong> a new room or <strong>Join</strong> an existing one via a 6-character code.</p>
                 </div>
 
                 <!-- Step 2 -->
-                <div class="step-card p-8 rounded-3xl bg-white/5 relative overflow-hidden group">
-                    <div class="text-7xl font-black text-indigo-400 absolute top-2 right-4 opacity-[0.02] blur-md group-hover:opacity-100 group-hover:blur-none transition-all duration-700 select-none pointer-events-none">2</div>
-                    <div class="w-12 h-12 rounded-xl bg-indigo-500/10 flex items-center justify-center text-indigo-400 mb-6 font-bold">B</div>
-                    <h3 class="text-xl font-bold text-white mb-4">Secure & Burn Protocol</h3>
-                    <p class="text-sm text-gray-500 leading-relaxed mb-4">Enter a shared password to synchronize the E2EE channel. Use the 🔥 icon to instantly purge the room for all participants.</p>
-                    <p class="text-[10px] text-indigo-400 font-mono tracking-widest uppercase opacity-70">Note: If no shared key is established, decode via cipher method manually.</p>
+                <div class="step-card p-6 rounded-3xl bg-white/5 relative overflow-hidden group">
+                    <div class="w-10 h-10 rounded-xl bg-indigo-500/10 flex items-center justify-center text-indigo-400 mb-6 font-bold">2</div>
+                    <h3 class="text-lg font-bold text-white mb-2 uppercase">Secure Handshake</h3>
+                    <p class="text-sm text-gray-500 leading-relaxed mb-4">Once in the room, sync with your partner using a <strong>shared password</strong>. This derives your unique AES-256 session key locally on your device.</p>
+                    <p class="text-[10px] text-indigo-400 font-mono tracking-widest uppercase opacity-70">Note: If no shared key is established, messages can be decoded manually via the active cipher method.</p>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="step-card p-6 rounded-3xl bg-white/5 relative overflow-hidden group">
+                    <div class="w-10 h-10 rounded-xl bg-indigo-500/10 flex items-center justify-center text-indigo-400 mb-6 font-bold">3</div>
+                    <h3 class="text-lg font-bold text-white mb-2 uppercase">Full Transmission</h3>
+                    <p class="text-sm text-gray-500 leading-relaxed">Type your message and hit send. No data is ever stored on the server as plaintext. Every byte is encrypted before it leaves your browser.</p>
                 </div>
             </div>
         </div>
 
-        <!-- Section 2: Security Levels -->
+
+        <!-- Section 3: Critical Intelligence (Desktop & Refresh) -->
         <div class="mb-32">
              <div class="flex items-center gap-4 mb-12">
                 <div class="h-px flex-1 bg-gradient-to-r from-transparent to-white/5"></div>
-                <h2 class="text-2xl font-bold text-white uppercase tracking-widest shrink-0">02. Encryption Specs</h2>
+                <h2 class="text-2xl font-bold text-white uppercase tracking-widest shrink-0">03. Critical Security Notice</h2>
                 <div class="h-px flex-1 bg-gradient-to-l from-transparent to-white/5"></div>
             </div>
 
-            <div class="glass-panel p-1 border border-white/5 rounded-[2.5rem]">
-                <div class="bg-[#0b0b0f] rounded-[2.2rem] overflow-hidden">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="p-8 rounded-[2.5rem] bg-indigo-500/5 border border-indigo-500/10">
+                    <div class="inline-flex items-center gap-2 text-indigo-400 font-bold uppercase tracking-widest mb-4">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                        Desktop Optimized
+                    </div>
+                    <p class="text-sm text-gray-400 leading-relaxed mb-4">
+                        Nulvexor is engineered for **Desktop Environments**. For maximum performance of the Web Crypto API and to experience the full immersive cinematic UI, we recommend using a modern desktop browser (Chrome, Edge, or Firefox).
+                    </p>
+                    <p class="text-[10px] text-gray-600 font-mono italic">MOBILE DEVICES MAY EXPERIENCE REDUCED GLOW FIDELITY.</p>
+                </div>
+
+                <div class="p-8 rounded-[2.5rem] bg-red-500/5 border border-red-500/10">
+                    <div class="inline-flex items-center gap-2 text-red-500 font-bold uppercase tracking-widest mb-4">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+                        Refresh Termination
+                    </div>
+                    <p class="text-sm text-gray-400 leading-relaxed mb-4">
+                        This is a <strong>Zero-Knowledge</strong> platform. We store nothing in databases. If you refresh the page or close the tab, your session is immediately destroyed.
+                    </p>
+                    <p class="text-[10px] text-red-400 font-mono tracking-widest uppercase">⚠️ REFRESHING WILL END THE CHAT FOR YOU PERMANENTLY.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 4: Security Features Table -->
+        <div class="mb-32">
+             <div class="flex items-center gap-4 mb-12">
+                <div class="h-px flex-1 bg-gradient-to-r from-transparent to-white/5"></div>
+                <h2 class="text-2xl font-bold text-white uppercase tracking-widest shrink-0">04. Encryption Specs</h2>
+                <div class="h-px flex-1 bg-gradient-to-l from-transparent to-white/5"></div>
+            </div>
+
+            <div class="glass-panel p-1 border border-white/5 rounded-[2.5rem] overflow-hidden">
+                <div class="bg-[#0b0b0f] rounded-[2.2rem] overflow-hidden overflow-x-auto">
                     <table class="w-full text-left border-collapse">
                         <thead>
                             <tr class="border-b border-white/5">
@@ -119,68 +163,35 @@
                             <tr class="border-b border-white/5 hover:bg-white/5 transition-colors group">
                                 <td class="p-8">
                                     <div class="flex items-center gap-4">
-                                        <div class="w-3 h-3 rounded-full bg-indigo-400 shadow-[0_0_10px_rgba(99,102,241,1)]"></div>
-                                        <span class="text-white font-bold">AES-256-GCM</span>
+                                        <div class="status-dot bg-indigo-500"></div>
+                                        <span class="text-white font-bold text-sm sm:text-base">AES-256-GCM</span>
                                     </div>
                                 </td>
-                                <td class="p-8 text-gray-400">NSA, RAW, Mossad</td>
-                                <td class="p-8"><span class="px-3 py-1 bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 text-[10px] font-bold rounded-full">LEVEL 5 — TOP SECRET</span></td>
+                                <td class="p-8 text-gray-400 text-sm">NSA, TOP-SECRET Clearance</td>
+                                <td class="p-8"><span class="px-3 py-1 bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 text-[10px] font-bold rounded-full uppercase">LEVEL 5 ACCESS</span></td>
                             </tr>
                             <tr class="border-b border-white/5 hover:bg-white/5 transition-colors group">
                                 <td class="p-8">
                                     <div class="flex items-center gap-4">
-                                        <div class="w-3 h-3 rounded-full bg-indigo-400 shadow-[0_0_10px_rgba(99,102,241,1)]"></div>
-                                        <span class="text-white font-bold">HKDF-SHA256</span>
+                                        <div class="status-dot bg-indigo-400"></div>
+                                        <span class="text-white font-bold text-sm sm:text-base">HKDF-SHA256</span>
                                     </div>
                                 </td>
-                                <td class="p-8 text-gray-400">Signal, WhatsApp E2EE</td>
-                                <td class="p-8"><span class="px-3 py-1 bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 text-[10px] font-bold rounded-full">RATCHETING SESSIONS</span></td>
+                                <td class="p-8 text-gray-400 text-sm">Industrial Handshake Sync</td>
+                                <td class="p-8"><span class="px-3 py-1 bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 text-[10px] font-bold rounded-full uppercase">RATCHETING SESSION</span></td>
                             </tr>
                             <tr class="hover:bg-white/5 transition-colors group">
                                 <td class="p-8">
                                     <div class="flex items-center gap-4">
-                                        <div class="w-3 h-3 rounded-full bg-indigo-400 shadow-[0_0_10px_rgba(129,140,248,1)]"></div>
-                                        <span class="text-white font-bold">Web Crypto API</span>
+                                        <div class="status-dot bg-indigo-400"></div>
+                                        <span class="text-white font-bold text-sm sm:text-base">Visual Ciphers</span>
                                     </div>
                                 </td>
-                                <td class="p-8 text-gray-400">Native Browser Hardware</td>
-                                <td class="p-8"><span class="px-3 py-1 bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 text-[10px] font-bold rounded-full">ZERO KNOWLEDGE</span></td>
+                                <td class="p-8 text-gray-400 text-sm">Obfuscation Camouflage</td>
+                                <td class="p-8"><span class="px-3 py-1 bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 text-[10px] font-bold rounded-full uppercase">VISUAL MASKING</span></td>
                             </tr>
                         </tbody>
                     </table>
-                </div>
-            </div>
-        </div>
-
-        <!-- Section 3: Visual Modes -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-16 items-center mb-32">
-            <div>
-                <h2 class="text-3xl font-bold text-white mb-6 uppercase tracking-tight">Visual <span class="text-indigo-400">Disguise</span> Engines</h2>
-                <p class="text-gray-500 leading-relaxed mb-8">
-                    Nulvexor allows hardware-accelerated AES ciphertext to be wrapped in various classical ciphers. This provides an additional layer of obfuscation against visual surveillance.
-                </p>
-                <ul class="space-y-4">
-                    <li class="flex items-center gap-3 text-sm">
-                        <svg class="w-5 h-5 text-indigo-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                        <span><strong class="text-white">True Morse</strong> — Reversible dot-dash conversion.</span>
-                    </li>
-                    <li class="flex items-center gap-3 text-sm">
-                        <svg class="w-5 h-5 text-indigo-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                        <span><strong class="text-white">Vigenere / Atbash</strong> — Classical letter substitution.</span>
-                    </li>
-                    <li class="flex items-center gap-3 text-sm">
-                        <svg class="w-5 h-5 text-indigo-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                        <span><strong class="text-white">Z-Cipher</strong> — Custom visual pattern masking.</span>
-                    </li>
-                </ul>
-            </div>
-            <div class="relative">
-                <div class="absolute -inset-4 bg-indigo-500/10 blur-3xl rounded-full"></div>
-                <div class="relative glass-panel p-8 font-mono text-xs space-y-4 border border-indigo-500/20">
-                    <p class="text-indigo-400/60 pb-2 border-b border-white/5">CIPHER PREVIEW (V3.5):</p>
-                    <p class="text-white break-all leading-6 opacity-30">.... . .-.. .-.. --- / .--. .-. --- - --- -.-. --- .-..</p>
-                    <p class="text-indigo-400 break-all leading-6 animate-pulse">[RATCHET ROTATED: SUCCESS]</p>
-                    <p class="text-indigo-400 break-all leading-6">S3f9+K2L8w9M1n0P... (AUTHENTICATED)</p>
                 </div>
             </div>
         </div>

@@ -2,6 +2,10 @@
 
 > **Quantum-Ready. Zero-Knowledge. Peer-to-Peer Encryption.**
 
+> [!IMPORTANT]
+> **DESKTOP OPTIMIZED**: This platform is designed for desktop environments for maximum cryptographic performance and UI stability.
+> **SESSION WARNING**: Refreshing the browser or closing the tab will immediately terminate your session and purge all local cryptographic keys.
+
 Nulvexor is a premium, high-security chat platform designed for absolute privacy. It leverages industry-standard cryptographic protocols used by global intelligence agencies to ensure your communications remain untraceable and unbreakable.
 
 🌐 **Website:** [www.nulvexor.co.in](https://www.nulvexor.co.in)

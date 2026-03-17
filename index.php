@@ -31,6 +31,9 @@ $roomFromLink = isset($_GET['room']) ? htmlspecialchars($_GET['room']) : null;
     </script>
 </head>
 <body class="bg-[#0b0b0f] text-white min-h-screen relative overflow-x-hidden">
+    <!-- Premium Ambient Glow System -->
+    <div class="glow-ambient-wrapper"></div>
+    
     <!-- Design Elements -->
     <div class="grid-background"></div>
     <div class="radial-glow top-0 left-1/4 -translate-x-1/2 opacity-50"></div>
@@ -44,7 +47,7 @@ $roomFromLink = isset($_GET['room']) ? htmlspecialchars($_GET['room']) : null;
                     <img src="assets/logo.svg?v=2" alt="Nulvexor" class="w-10 h-10 group-hover:rotate-12 transition-transform duration-300">
                     <span class="text-xl font-bold tracking-tighter text-white">NULVEXOR</span>
                 </a>
-                <div class="hidden md:flex items-center gap-6">
+                <div class="hidden lg:flex items-center gap-6">
                     <a href="./" class="text-sm font-medium text-gray-400 hover:text-white transition-colors">Home</a>
                     <a href="#features" class="text-sm font-medium text-gray-400 hover:text-white transition-colors">Protocols</a>
                     <a href="guide" class="flex items-center gap-1 text-sm font-medium text-indigo-400 hover:text-indigo-300 transition-colors">
@@ -56,7 +59,7 @@ $roomFromLink = isset($_GET['room']) ? htmlspecialchars($_GET['room']) : null;
             <div class="flex items-center gap-4">
                 <a href="https://github.com/dwijsys" target="_blank" class="flex items-center gap-2 btn-secondary text-xs py-2 px-4 h-10 group/gh hover:scale-105 transition-all">
                     <svg class="w-5 h-5 text-gray-400 group-hover/gh:text-white transition-colors" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.008.069-.008 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clip-rule="evenodd" /></svg>
-                    <span class="hidden sm:inline">GitHub</span>
+                    <span>GitHub</span>
                 </a>
             </div>
         </div>
@@ -139,27 +142,27 @@ $roomFromLink = isset($_GET['room']) ? htmlspecialchars($_GET['room']) : null;
                     <div class="feature-icon-container">
                         <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
                     </div>
-                    <h3 class="text-xl font-bold text-white mb-3">Agency-Grade E2EE</h3>
+                    <h3 class="text-xl font-bold text-white mb-3">E2EE Handshake</h3>
                     <p class="text-gray-400 text-sm leading-relaxed">
-                        Utilizes AES-256-GCM, the gold standard for NSA and RAW Top-Secret communications. No server-side keys. No backdoors.
+                        Establish secure uplinks with AES-256-GCM encryption. Zero server-side plaintext storage. Your keys never leave your machine.
                     </p>
                 </div>
                 <div class="feature-card group">
                     <div class="feature-icon-container">
-                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path></svg>
                     </div>
-                    <h3 class="text-xl font-bold text-white mb-3">Symmetric Ratchet</h3>
+                    <h3 class="text-xl font-bold text-white mb-3">Ambient Intelligence</h3>
                     <p class="text-gray-400 text-sm leading-relaxed">
-                        Features HKDF-SHA256 key rotation. Each message has a unique cryptographic signature, ensuring perfect forward secrecy across the session.
+                        Visualizing cryptographic states through a cinematic ambient glow system. Real-time feedback for sending, receiving, and decryption.
                     </p>
                 </div>
                 <div class="feature-card group">
                     <div class="feature-icon-container">
-                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                     </div>
-                    <h3 class="text-xl font-bold text-white mb-3">Visual Obfuscation</h3>
+                    <h3 class="text-xl font-bold text-white mb-3">Ephemeral Sessions</h3>
                     <p class="text-gray-400 text-sm leading-relaxed">
-                        Toggle between Morse, Atbash, or Vigenere cipher displays. Hidden in plain sight, your data remains secured by industrial-grade crypto.
+                        All communications are purged upon refresh or room closure. Automatic message self-destruction ensures no digital footprint remains.
                     </p>
                 </div>
             </div>
@@ -250,18 +253,31 @@ $roomFromLink = isset($_GET['room']) ? htmlspecialchars($_GET['room']) : null;
                 <span class="text-sm font-bold tracking-widest">NULVEXOR</span>
             </a>
             <p class="text-xs text-gray-600">© 2026 Nulvexor Protocol — Zero Knowledge Platform</p>
-            <div class="flex items-center gap-6">
-                <a href="guide" class="text-xs font-bold text-gray-500 hover:text-white transition-colors uppercase tracking-widest">Operational Manual</a>
-            </div>
         </div>
     </footer>
 
 
     <script>
+        // Ambient Cinematic Glow Controller (Cyberpunk/NSA-Grade)
+        let glowRevertTimeout = null;
+        function triggerGlowState(state) {
+            const wrapper = document.querySelector('.glow-ambient-wrapper');
+            if (!wrapper) return;
+            clearTimeout(glowRevertTimeout);
+            wrapper.classList.remove('state-sending', 'state-receiving', 'state-error');
+            if (state !== 'default') {
+                wrapper.classList.add(`state-${state}`);
+                glowRevertTimeout = setTimeout(() => {
+                    wrapper.classList.remove(`state-${state}`);
+                }, 3000);
+            }
+        }
+
         // Professional Form Validation Logic
         const forms = ['handshakeForm', 'createRoomForm', 'joinRoomForm'];
         
         const ALERT_ICON = `<svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>`;
+
 
         forms.forEach(formId => {
             const form = document.getElementById(formId);
@@ -307,6 +323,9 @@ $roomFromLink = isset($_GET['room']) ? htmlspecialchars($_GET['room']) : null;
                         </div>
                     `;
                     errorContainer.classList.remove('hidden');
+                    
+                    // Trigger ambient red glow for error
+                    triggerGlowState('error');
                     
                     // Re-trigger animation if already visible
                     const alert = errorContainer.querySelector('.nulv-alert');

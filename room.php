@@ -56,6 +56,9 @@ if (!file_exists($filePath)) {
     </script>
 </head>
 <body class="bg-[#0b0b0f] text-white h-dvh overflow-hidden flex flex-col">
+    <!-- Premium Ambient Glow System -->
+    <div class="glow-ambient-wrapper"></div>
+
     <!-- Design Elements -->
     <div class="grid-background opacity-10"></div>
 
@@ -90,7 +93,7 @@ if (!file_exists($filePath)) {
 
     <div class="flex flex-1 overflow-hidden">
         <!-- Sidebar -->
-        <aside id="mobileSidebar" class="fixed md:relative inset-y-0 left-0 z-40 w-64 md:w-72 bg-[#111114]/90 backdrop-blur-xl border-r border-[#232329] flex flex-col transform -translate-x-full md:translate-x-0 transition-transform duration-300 ease-in-out md:flex">
+        <aside id="mobileSidebar" class="w-64 md:w-72 bg-[#111114]/90 backdrop-blur-xl border-r border-[#232329] flex flex-col transform md:translate-x-0 transition-transform duration-300 ease-in-out">
             <div class="p-6">
                 <h4 class="text-[11px] font-bold text-gray-500 mb-6 tracking-[0.2em] uppercase">Connectors</h4>
                 
@@ -132,22 +135,25 @@ if (!file_exists($filePath)) {
             </div>
 
             <!-- Input Area -->
-            <div class="p-6 pt-0 flex-shrink-0">
+            <div class="p-4 sm:p-6 pt-0 flex-shrink-0">
                 <div class="max-w-4xl mx-auto space-y-4">
                     <!-- NEW SECRET CHAT SYSTEM UI -->
-                    <div id="secretChatPanel" class="glass-panel p-3 sm:p-4 border border-indigo-500/20 bg-indigo-500/5 rounded-xl space-y-3 sm:space-y-4">
-                        <div class="flex flex-wrap items-end gap-3 sm:gap-4">
+                    <div id="secretChatPanel" class="glass-panel p-4 border border-indigo-500/20 bg-indigo-500/5 rounded-xl space-y-4">
+                        <div class="flex flex-wrap items-end gap-4">
                             <!-- Shared Key Input -->
                             <div class="flex-1 min-w-[200px] relative">
                                 <label class="text-[11px] font-bold text-purple-400 uppercase tracking-widest mb-1 block ml-1">Encryption Key</label>
                                 <input type="password" id="sharedKeyInput" placeholder="Enter dragon-4821 style key..." 
-                                    class="w-full bg-black/40 border border-[#232329] rounded-lg px-4 py-3 text-sm text-white placeholder-gray-600 focus:border-purple-500/50 outline-none transition-all">
+                                    class="w-full bg-black/40 border border-[#232329] rounded-lg px-4 py-3 text-sm text-white placeholder-gray-600 focus:border-indigo-500/50 outline-none transition-all">
+                                <div id="keyError" class="hidden text-[10px] font-bold text-red-500 flex items-center gap-1.5 mt-1.5 uppercase tracking-widest animate-fade-in">
+                                    <span class="animate-pulse">⚠</span> Authentication Failed
+                                </div>
                             </div>
 
                             <!-- Cipher Mode Selector -->
                             <div class="relative">
                                 <label class="text-[11px] font-bold text-gray-500 uppercase tracking-widest mb-1 block ml-1">Cipher Mode</label>
-                                <select id="cipherModeSelect" class="bg-black/40 border border-[#232329] rounded-lg px-3 py-3 text-sm text-gray-300 focus:border-purple-500/50 outline-none cursor-pointer">
+                                <select id="cipherModeSelect" class="bg-black/40 border border-[#232329] rounded-lg px-3 py-3 text-sm text-gray-300 focus:border-indigo-500/50 outline-none cursor-pointer">
                                     <option value="nsa">NSA (AES-GCM)</option>
                                     <option value="raw">RAW (Morse Logic)</option>
                                     <option value="fsb">FSB (Serpent Glyphs)</option>
@@ -175,10 +181,10 @@ if (!file_exists($filePath)) {
                             <input type="text" id="messageInput" autocomplete="off" placeholder="Type a message to encrypt..." required 
                                 class="w-full h-14 bg-black/60 border border-indigo-500/20 focus:border-indigo-500/50 rounded-lg px-5 py-3 text-base text-white placeholder-gray-600 outline-none transition-all pr-12 sm:pr-44">
                             <div class="absolute right-1.5 top-1.5">
-                                <button type="submit" id="sendBtn" disabled class="h-11 w-11 sm:w-auto px-0 sm:px-6 flex items-center justify-center sm:gap-2 bg-indigo-500/10 text-white border border-indigo-500/20 rounded-md text-xs font-bold uppercase tracking-widest hover:bg-[#0d0d12] hover:border-indigo-500 hover:shadow-[0_0_20px_rgba(99,102,241,0.3)] transition-all disabled:opacity-30 disabled:cursor-not-allowed">
-                                    <span class="hidden sm:inline">Send Encrypted</span>
-                                    <svg class="w-4 h-4 sm:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path>
+                                <button type="submit" id="sendBtn" disabled class="h-11 w-11 sm:w-auto px-0 sm:px-6 flex items-center justify-center sm:gap-2 bg-[#050505] text-indigo-500 border border-indigo-500/30 rounded-lg text-xs font-bold uppercase tracking-widest hover:bg-indigo-600 hover:text-white hover:border-indigo-500 hover:shadow-[0_0_15px_rgba(99,102,241,0.4)] transition-all duration-300 disabled:opacity-20 disabled:cursor-not-allowed group">
+                                    <span class="hidden sm:inline">Send Secure</span>
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"></path>
                                     </svg>
                                 </button>
                             </div>
