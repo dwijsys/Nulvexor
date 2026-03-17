@@ -1,0 +1,2 @@
+# This file ensures the rooms/ directory is tracked by git
+# The directory is needed for the application to store room JSON files

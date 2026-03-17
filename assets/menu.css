@@ -1,0 +1,70 @@
+/* Message Dropdown Menu */
+.message-menu {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    display: inline-block;
+}
+
+.menu-dropbtn {
+    background: transparent;
+    color: var(--text-muted);
+    border: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s, color 0.2s;
+    padding: 0;
+    line-height: 1;
+}
+
+.menu-dropbtn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--text-main);
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    right: 0;
+    margin-top: 5px;
+    background-color: var(--bg-panel);
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 255, 65, 0.15);
+    border: 1px solid var(--neon-green-dim);
+    border-radius: 6px;
+    z-index: 100;
+    overflow: hidden;
+}
+
+.dropdown-content a {
+    color: var(--accent);
+    padding: 10px 16px;
+    text-decoration: none;
+    display: block;
+    font-size: 0.85rem;
+    font-family: 'Fira Code', monospace;
+    border-bottom: 1px solid var(--border);
+    transition: background 0.2s;
+}
+
+.dropdown-content a:hover {
+    background-color: rgba(0, 255, 65, 0.08);
+}
+
+.dropdown-content a:last-child {
+    border-bottom: none;
+}
+
+.show {
+    display: block;
+}
+
+.msg-footer {
+    margin-top: 0.5rem;
+}

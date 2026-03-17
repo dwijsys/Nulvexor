@@ -1,0 +1,19 @@
+# Room data files (temporary chat storage)
+rooms/*.json
+
+# Keep the directory but not the files
+!rooms/.gitkeep
+
+# System files
+.DS_Store
+Thumbs.db
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Logs
+*.log
+error_log

@@ -1,0 +1,25 @@
+{
+  "name": "nulvexor",
+  "version": "1.0.0",
+  "description": "Nulvexor is a secure, temporary, and database-free chat platform designed for \\\"burn after reading\\\" communication. Users can join rooms using 6-character codes. Messages are encrypted client-side using a variety of ciphers and stored on the server momentarily inside JSON files. A predefined burn timer (10s, 30s, 60s, or 5m) dictates exactly when messages are scrubbed from the server forever.",
+  "scripts": {
+    "test": "echo \\\"Error: no test specified\\\" && exit 1",
+    "start": "echo 'Nulvexor PHP app - started with Apache (Render Docker)'"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "ws": "^8.18.0",
+    "uuid": "^10.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dwijsys/Nulvexor.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dwijsys/Nulvexor/issues"
+  },
+  "homepage": "https://github.com/dwijsys/Nulvexor#readme"
+}
