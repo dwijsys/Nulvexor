@@ -47,12 +47,12 @@ $roomFromLink = isset($_GET['room']) ? htmlspecialchars($_GET['room']) : null;
                     <img src="assets/logo.svg?v=2" alt="Nulvexor" class="w-10 h-10 group-hover:rotate-12 transition-transform duration-300">
                     <span class="text-xl font-bold tracking-tighter text-white">NULVEXOR</span>
                 </a>
-                <div class="hidden lg:flex items-center gap-6">
+                <div class=" lg:flex items-center gap-6">
                     <a href="./" class="text-sm font-medium text-gray-400 hover:text-white transition-colors">Home</a>
                     <a href="#features" class="text-sm font-medium text-gray-400 hover:text-white transition-colors">Protocols</a>
                     <a href="guide" class="flex items-center gap-1 text-sm font-medium text-indigo-400 hover:text-indigo-300 transition-colors">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
-                        User Guide
+                        
                     </a>
                 </div>
             </div>
@@ -85,7 +85,7 @@ $roomFromLink = isset($_GET['room']) ? htmlspecialchars($_GET['room']) : null;
                 <div class="flex flex-wrap items-center justify-center lg:justify-start gap-4">
                     <a href="#app" class="glass-panel px-8 py-4 h-14 text-base flex items-center justify-center font-bold text-white transition-preset border border-white/5 gap-2 group">
                         <svg class="w-5 h-5 text-indigo-400 transition-colors group-hover:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
-                        Initial Connection
+                       Initialize  Connection
                     </a>
                     <a href="guide" class="glass-panel px-8 py-4 h-14 text-base flex items-center justify-center font-bold text-white transition-preset border border-white/5 gap-2 group">
                         <svg class="w-5 h-5 text-indigo-400 transition-colors group-hover:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
