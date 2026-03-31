@@ -1,7 +1,11 @@
 <?php
 // index.php
-session_start();
+require_once __DIR__ . '/security.php';
+start_secure_session();
+send_security_headers();
+
 $roomFromLink = isset($_GET['room']) ? htmlspecialchars($_GET['room']) : null;
+$csrfToken = get_csrf_token();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -42,26 +46,39 @@ $roomFromLink = isset($_GET['room']) ? htmlspecialchars($_GET['room']) : null;
     <!-- Navbar -->
     <nav class="nav-glass fixed top-0 w-full z-50 px-6 box-border">
         <div class="max-w-7xl mx-auto nav-height flex items-center justify-between">
-            <div class="flex items-center gap-8">
+            <div class="flex items-center gap-4">
                 <a href="./" class="flex items-center gap-3 group">
                     <img src="assets/logo.svg?v=2" alt="Nulvexor" class="w-10 h-10 group-hover:rotate-12 transition-transform duration-300">
                     <span class="text-xl font-bold tracking-tighter text-white">NULVEXOR</span>
                 </a>
-                <div class=" lg:flex items-center gap-6">
-                    <a href="./" class="text-sm font-medium text-gray-400 hover:text-white transition-colors">Home</a>
-                    <a href="#features" class="text-sm font-medium text-gray-400 hover:text-white transition-colors">Protocols</a>
-                    <a href="guide" class="flex items-center gap-1 text-sm font-medium text-indigo-400 hover:text-indigo-300 transition-colors">
+                <div class="nav-links">
+                    <a href="./" class="nav-link nav-link--active">Home</a>
+                    <a href="#features" class="nav-link">Protocols</a>
+                    <a href="guide" class="nav-link flex items-center gap-2">
+                        <span>Guide</span>
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
-                        
                     </a>
                 </div>
+                <button class="mobile-nav-toggle" id="mobileNavToggle" aria-label="Open menu">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                </button>
             </div>
-            <div class="flex items-center gap-4">
-                <a href="https://github.com/dwijsys" target="_blank" class="flex items-center gap-2 btn-secondary text-xs py-2 px-4 h-10 group/gh hover:scale-105 transition-all">
-                    <svg class="w-5 h-5 text-gray-400 group-hover/gh:text-white transition-colors" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.008.069-.008 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clip-rule="evenodd" /></svg>
-                    <span>GitHub</span>
+            <div class="flex items-center gap-3">
+                <a href="https://github.com/dwijsys" target="_blank" class="nav-cta nav-cta--icon" aria-label="GitHub">
+                    <svg fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.008.069-.008 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clip-rule="evenodd" /></svg>
+                </a>
+                <a href="https://www.linkedin.com/in/dwij-malaviya-9014a82a6" target="_blank" class="nav-cta nav-cta--icon" aria-label="LinkedIn">
+                    <svg fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14C2.239 0 0 2.239 0 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5V5c0-2.761-2.238-5-5-5zM7.119 20.452H3.558V9h3.561v11.452zM5.338 7.433c-1.137 0-2.06-.945-2.06-2.112 0-1.167.923-2.112 2.06-2.112 1.138 0 2.061.945 2.061 2.112 0 1.167-.923 2.112-2.061 2.112zM20.452 20.452h-3.561v-5.576c0-1.33-.027-3.039-1.852-3.039-1.853 0-2.136 1.446-2.136 2.941v5.674H9.342V9h3.415v1.561h.048c.476-.9 1.637-1.852 3.368-1.852 3.602 0 4.279 2.371 4.279 5.455v6.288z"/></svg>
                 </a>
             </div>
+        </div>
+        <div class="mobile-nav-backdrop" id="mobileNavBackdrop"></div>
+        <div class="mobile-nav-drawer" id="mobileNavDrawer">
+            <a href="./">Home</a>
+            <a href="#features">Protocols</a>
+            <a href="guide" class="flex items-center gap-2">Guide <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg></a>
+            <a href="https://github.com/dwijsys" target="_blank" class="flex items-center gap-2">GitHub <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.008.069-.008 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clip-rule="evenodd" /></svg></a>
+            <a href="https://www.linkedin.com/in/dwij-malaviya-9014a82a6" target="_blank" class="flex items-center gap-2">LinkedIn <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14C2.239 0 0 2.239 0 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5V5c0-2.761-2.238-5-5-5zM7.119 20.452H3.558V9h3.561v11.452zM5.338 7.433c-1.137 0-2.06-.945-2.06-2.112 0-1.167.923-2.112 2.06-2.112 1.138 0 2.061.945 2.061 2.112 0 1.167-.923 2.112-2.061 2.112zM20.452 20.452h-3.561v-5.576c0-1.33-.027-3.039-1.852-3.039-1.853 0-2.136 1.446-2.136 2.941v5.674H9.342V9h3.415v1.561h.048c.476-.9 1.637-1.852 3.368-1.852 3.602 0 4.279 2.371 4.279 5.455v6.288z"/></svg></a>
         </div>
     </nav>
 
@@ -80,7 +97,7 @@ $roomFromLink = isset($_GET['room']) ? htmlspecialchars($_GET['room']) : null;
                     THE ULTIMATE <br class="hidden md:block"> SECURE GRID
                 </h1>
                 <p class="text-lg md:text-xl text-gray-400 mb-10 max-w-2xl mx-auto lg:mx-0 leading-relaxed font-medium">
-                    Nulvexor implements Zero-Knowledge end-to-end encryption with HKDF-SHA256 ratcheting. Your keys, your secrets, impossible to decrypt.
+                    Zero-Knowledge E2EE, HKDF-SHA256 ratcheting, 12-char codes, CSRF-hardened forms, and CSP/HSTS by default. Keys never leave your device.
                 </p>
                 <div class="flex flex-wrap items-center justify-center lg:justify-start gap-4">
                     <a href="#app" class="glass-panel px-8 py-4 h-14 text-base flex items-center justify-center font-bold text-white transition-preset border border-white/5 gap-2 group">
@@ -144,7 +161,7 @@ $roomFromLink = isset($_GET['room']) ? htmlspecialchars($_GET['room']) : null;
                     </div>
                     <h3 class="text-xl font-bold text-white mb-3">E2EE Handshake</h3>
                     <p class="text-gray-400 text-sm leading-relaxed">
-                        Establish secure uplinks with AES-256-GCM encryption. Zero server-side plaintext storage. Your keys never leave your machine.
+                        AES-256-GCM + HKDF, zero plaintext at rest, CSRF-guarded forms, and strict CSP/HSTS headers.
                     </p>
                 </div>
                 <div class="feature-card group">
@@ -180,64 +197,111 @@ $roomFromLink = isset($_GET['room']) ? htmlspecialchars($_GET['room']) : null;
             <div class="grid grid-cols-1 <?php echo $roomFromLink ? 'md:grid-cols-3' : 'md:grid-cols-2'; ?> gap-8 max-w-6xl mx-auto">
                 <?php if ($roomFromLink): ?>
                 <!-- Join via Link -->
-                <div class="glass-panel p-8 group transition-preset relative overflow-hidden active-card">
-                    <div class="absolute top-0 right-0 p-4 opacity-[0.02] group-hover:opacity-[0.04] transition-opacity bg-icon-container">
-                        <svg class="w-32 h-32" fill="currentColor" viewBox="0 0 24 24"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg>
-                    </div>
-                    <div class="w-12 h-12 rounded-xl bg-indigo-500/10 flex items-center justify-center text-indigo-400 mb-6 group-hover:scale-110 transition-transform">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path></svg>
-                    </div>
-                    <h3 class="text-xl font-bold text-white mb-2">Link Handshake</h3>
-                    <p class="text-sm text-gray-500 mb-8 leading-relaxed">Establish connection for room <span class="text-indigo-400 font-mono font-bold"><?php echo $roomFromLink; ?></span>. Identification required.</p>
-                    
-                    <form id="handshakeForm" action="join_room" method="POST" class="space-y-4" novalidate>
-                        <input type="hidden" name="roomcode" value="<?php echo $roomFromLink; ?>">
-                        <div class="relative">
-                            <input type="text" name="username" autocomplete="off" placeholder="Agent Alias (e.g. Neo)" class="w-full bg-[#16161a] border border-[#232329] focus:border-indigo-500/50 rounded-lg px-4 py-3 text-sm text-white placeholder-gray-600 outline-none transition-all">
+                <div class="action-card">
+                    <div class="action-card__header">
+                        <div class="action-chip action-chip--link">Link detected</div>
+                        <div class="action-icon">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path></svg>
                         </div>
-                        <button type="submit" class="w-full btn-primary h-12">Complete Handshake</button>
+                    </div>
+                    <div class="action-body">
+                        <h3 class="action-title">Link Handshake</h3>
+                        <p class="action-sub">Establish connection for <span class="text-indigo-400 font-mono font-bold"><?php echo $roomFromLink; ?></span>. Confirm your alias to attach to this uplink.</p>
+                        <div class="action-metrics">
+                            <div class="metric-pill">
+                                <span class="label">ROOM</span>
+                                <span class="value font-mono tracking-widest"><?php echo $roomFromLink; ?></span>
+                            </div>
+                            <div class="metric-pill">
+                                <span class="label">MODE</span>
+                                <span class="value">Ephemeral</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <form id="handshakeForm" action="join_room" method="POST" class="action-form" novalidate>
+                        <input type="hidden" name="roomcode" value="<?php echo $roomFromLink; ?>">
+                        <input type="hidden" name="csrf_token" value="<?php echo $csrfToken; ?>">
+                        <label class="action-label">
+                            Alias
+                            <input type="text" name="username" autocomplete="off" placeholder="Agent Alias (e.g. Neo)" class="action-input">
+                        </label>
+                        <button type="submit" class="action-btn action-btn--primary">Complete Handshake</button>
                         <div id="handshakeForm-error" class="error-container hidden"></div>
                     </form>
                 </div>
                 <?php endif; ?>
 
                 <!-- Create Room -->
-                <div class="glass-panel p-8 group transition-preset relative overflow-hidden active-card">
-                    <div class="absolute top-0 right-0 p-4 opacity-[0.02] group-hover:opacity-[0.04] transition-opacity bg-icon-container">
-                        <img src="assets/logo.svg?v=2" class="w-32 h-32 grayscale invert">
-                    </div>
-                    <div class="w-12 h-12 rounded-xl bg-indigo-500/10 flex items-center justify-center text-indigo-400 mb-6 group-hover:scale-110 transition-transform">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>
-                    </div>
-                    <h3 class="text-xl font-bold text-white mb-2">Create Uplink</h3>
-                    <p class="text-sm text-gray-500 mb-8 leading-relaxed">Enter your agent alias; a unique 6-character room code will be generated automatically to establish your secure channel.</p>
-                    
-                    <form id="createRoomForm" action="create_room" method="POST" class="space-y-4" novalidate>
-                        <div class="relative">
-                            <input type="text" name="username" autocomplete="off" placeholder="Agent Alias (e.g. Neo)" class="w-full bg-[#16161a] border border-[#232329] focus:border-indigo-500/50 rounded-lg px-4 py-3 text-sm text-white placeholder-gray-600 outline-none transition-all">
+                <div class="action-card">
+                    <div class="action-card__header">
+                        <div class="action-chip action-chip--new">New uplink</div>
+                        <div class="action-icon">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>
                         </div>
-                        <button type="submit" class="w-full btn-primary h-12">Establish Secure Room</button>
+                    </div>
+                    <div class="action-body">
+                        <h3 class="action-title">Create Uplink</h3>
+                        <p class="action-sub">Generate a fresh 12-character room code and broadcast a clean channel for your agents.</p>
+                        <div class="action-metrics">
+                            <div class="metric-pill">
+                                <span class="label">CODE</span>
+                                <span class="value">Auto</span>
+                            </div>
+                            <div class="metric-pill">
+                                <span class="label">SECURITY</span>
+                                <span class="value">AES-256-GCM</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <form id="createRoomForm" action="create_room" method="POST" class="action-form" novalidate>
+                        <input type="hidden" name="csrf_token" value="<?php echo $csrfToken; ?>">
+                        <label class="action-label">
+                            Alias
+                            <input type="text" name="username" autocomplete="off" placeholder="Agent Alias (e.g. Neo)" class="action-input">
+                        </label>
+                        <button type="submit" class="action-btn action-btn--primary">Establish Secure Room</button>
                         <div id="createRoomForm-error" class="error-container hidden"></div>
                     </form>
                 </div>
 
                 <!-- Join Room -->
-                <div class="glass-panel p-8 group transition-preset relative overflow-hidden active-card">
-                    <div class="absolute top-0 right-0 p-4 opacity-[0.02] group-hover:opacity-[0.04] transition-opacity bg-icon-container">
-                        <svg class="w-32 h-32" fill="currentColor" viewBox="0 0 24 24"><path d="M11 7L9.6 8.4l2.6 2.6H2v2h10.2l-2.6 2.6L11 17l5-5-5-5zm9 12h-8v2h8c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2h-8v2h8v14z"/></svg>
-                    </div>
-                    <div class="w-12 h-12 rounded-xl bg-indigo-500/10 flex items-center justify-center text-indigo-400 mb-6 group-hover:scale-110 transition-transform">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"></path></svg>
-                    </div>
-                    <h3 class="text-xl font-bold text-white mb-2">Join Presence</h3>
-                    <p class="text-sm text-gray-500 mb-8 leading-relaxed">Enter an existing room code to synchronize with other agents currently on the channel.</p>
-                    
-                    <form id="joinRoomForm" action="join_room" method="POST" class="space-y-4" novalidate>
-                        <div class="grid grid-cols-2 gap-3">
-                            <input type="text" name="username" autocomplete="off" placeholder="Alias" class="bg-[#16161a] border border-[#232329] focus:border-indigo-500/50 rounded-lg px-4 py-3 text-sm text-white placeholder-gray-600 outline-none transition-all">
-                            <input type="text" id="join_roomcode" name="roomcode" autocomplete="off" placeholder="CODE" maxlength="6" class="bg-[#16161a] border border-[#232329] focus:border-indigo-500/50 rounded-lg px-4 py-3 text-sm text-white placeholder-gray-600 outline-none transition-all uppercase tracking-widest font-bold">
+                <div class="action-card">
+                    <div class="action-card__header">
+                        <div class="action-chip action-chip--join">Existing uplink</div>
+                        <div class="action-icon">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"></path></svg>
                         </div>
-                        <button type="submit" class="w-full btn-secondary h-12">Synchronize Uplink</button>
+                    </div>
+                    <div class="action-body">
+                        <h3 class="action-title">Join Presence</h3>
+                        <p class="action-sub">Authenticate into an active room using the shared code. Session purges on disconnect.</p>
+                        <p class="text-xs text-gray-600">12-character codes preferred; 6-character legacy still accepted.</p>
+                        <div class="action-metrics">
+                            <div class="metric-pill">
+                                <span class="label">SYNC</span>
+                                <span class="value">Real-time</span>
+                            </div>
+                            <div class="metric-pill">
+                                <span class="label">TTL</span>
+                                <span class="value">Ephemeral</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <form id="joinRoomForm" action="join_room" method="POST" class="action-form" novalidate>
+                        <input type="hidden" name="csrf_token" value="<?php echo $csrfToken; ?>">
+                        <label class="action-label">
+                            Alias
+                            <input type="text" name="username" autocomplete="off" placeholder="Alias" class="action-input">
+                        </label>
+                        <label class="action-label">
+                            Room Code
+                            <input type="text" id="join_roomcode" name="roomcode" autocomplete="off" placeholder="XXXXXXXXXXXX" maxlength="12" class="action-input uppercase tracking-widest font-bold" aria-describedby="room-code-help">
+                        </label>
+                        <p id="room-code-help" class="text-xs text-gray-500">Accepts new 12-character codes and legacy 6-character codes.</p>
+                        <button type="submit" class="action-btn action-btn--secondary">Synchronize Uplink</button>
                         <div id="joinRoomForm-error" class="error-container hidden"></div>
                     </form>
                 </div>
@@ -258,6 +322,31 @@ $roomFromLink = isset($_GET['room']) ? htmlspecialchars($_GET['room']) : null;
 
 
     <script>
+        // Mobile nav toggle
+        const mobileNavToggle = document.getElementById('mobileNavToggle');
+        const mobileNavDrawer = document.getElementById('mobileNavDrawer');
+        const mobileNavBackdrop = document.getElementById('mobileNavBackdrop');
+
+        function closeMobileNav() {
+            mobileNavDrawer.style.display = 'none';
+            mobileNavBackdrop.style.display = 'none';
+        }
+
+        mobileNavToggle?.addEventListener('click', () => {
+            const isOpen = mobileNavDrawer.style.display === 'flex';
+            if (isOpen) {
+                closeMobileNav();
+            } else {
+                mobileNavDrawer.style.display = 'flex';
+                mobileNavBackdrop.style.display = 'block';
+            }
+        });
+
+        mobileNavBackdrop?.addEventListener('click', closeMobileNav);
+        document.querySelectorAll('#mobileNavDrawer a').forEach(a => {
+            a.addEventListener('click', closeMobileNav);
+        });
+
         // Ambient Cinematic Glow Controller (Cyberpunk/NSA-Grade)
         let glowRevertTimeout = null;
         function triggerGlowState(state) {
@@ -285,8 +374,9 @@ $roomFromLink = isset($_GET['room']) ? htmlspecialchars($_GET['room']) : null;
 
             form.addEventListener('submit', function(e) {
                 const errorContainer = document.getElementById(`${formId}-error`);
+                // reset visuals
+                form.querySelectorAll('input').forEach(input => input.classList.remove('input-error'));
                 let isValid = true;
-                let errorMessage = "";
 
                 if (formId === 'joinRoomForm') {
                     const username = form.querySelector('input[name="username"]').value.trim();
@@ -294,52 +384,36 @@ $roomFromLink = isset($_GET['room']) ? htmlspecialchars($_GET['room']) : null;
                     
                     if (!username && !roomcode) {
                         isValid = false;
-                        errorMessage = "ROOM CODE AND IDENTIFICATION REQUIRED";
+                        form.querySelectorAll('input[name="username"], input[name="roomcode"]').forEach(i => i.classList.add('input-error'));
                     } else if (!username) {
                         isValid = false;
-                        errorMessage = "IDENTIFICATION REQUIRED";
+                        form.querySelectorAll('input[name="username"]').forEach(i => i.classList.add('input-error'));
                     } else if (!roomcode) {
                         isValid = false;
-                        errorMessage = "ROOM CODE REQUIRED";
+                        form.querySelectorAll('input[name="roomcode"]').forEach(i => i.classList.add('input-error'));
                     }
                 } else {
                     const inputs = form.querySelectorAll('input:not([type="hidden"])');
                     inputs.forEach(input => {
                         if (!input.value.trim()) {
                             isValid = false;
-                            if (input.name === 'username') errorMessage = "IDENTIFICATION REQUIRED";
-                            else if (input.name === 'roomcode') errorMessage = "ROOM CODE REQUIRED";
+                            input.classList.add('input-error');
                         }
                     });
                 }
 
                 if (!isValid) {
                     e.preventDefault();
-                    // Inject premium alert structure
-                    errorContainer.innerHTML = `
-                        <div class="nulv-alert">
-                            ${ALERT_ICON}
-                            <span>${errorMessage}</span>
-                        </div>
-                    `;
-                    errorContainer.classList.remove('hidden');
-                    
-                    // Trigger ambient red glow for error
-                    triggerGlowState('error');
-                    
-                    // Re-trigger animation if already visible
-                    const alert = errorContainer.querySelector('.nulv-alert');
-                    alert.style.animation = 'none';
-                    alert.offsetHeight; // trigger reflow
-                    alert.style.animation = null;
+                    errorContainer?.classList.add('hidden');
                 }
             });
 
             // Clear error on input
             form.querySelectorAll('input').forEach(input => {
                 input.addEventListener('input', () => {
+                    input.classList.remove('input-error');
                     const errorContainer = document.getElementById(`${formId}-error`);
-                    errorContainer.classList.add('hidden');
+                    errorContainer?.classList.add('hidden');
                 });
             });
         });

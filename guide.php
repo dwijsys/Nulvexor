@@ -43,7 +43,7 @@
         }
     </style>
 </head>
-<body class="bg-[#07070a] text-gray-300 min-h-screen guide-gradient overflow-x-hidden">
+<body class="bg-[#07070a] text-gray-300 min-h-screen guide-gradient guide-view overflow-x-hidden">
     <!-- Premium Ambient Glow System -->
     <div class="glow-ambient-wrapper"></div>
     
@@ -54,12 +54,22 @@
                 <img src="assets/logo.svg?v=2" alt="Nulvexor" class="w-10 h-10 group-hover:rotate-12 transition-transform">
                 <span class="text-xl font-bold tracking-tighter text-white">NULVEXOR <span class="text-indigo-400 font-light ml-2">GUIDE</span></span>
             </a>
-            <div class="flex items-center gap-4">
-                <a href="./" class="text-sm font-bold text-gray-500 hover:text-white transition-colors uppercase tracking-widest flex items-center gap-2">
+            <div class="flex items-center gap-3">
+                <a href="./" class="hidden md:inline-flex text-sm font-bold text-gray-500 hover:text-white transition-colors uppercase tracking-widest items-center gap-2">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
                     Return to Grid
                 </a>
+                <button class="mobile-nav-toggle" id="guideNavToggle" aria-label="Open menu">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                </button>
             </div>
+        </div>
+        <div class="mobile-nav-backdrop" id="guideNavBackdrop"></div>
+        <div class="mobile-nav-drawer" id="guideNavDrawer">
+            <a href="./">Home</a>
+            <a href="#">Guide Top</a>
+            <a href="https://github.com/dwijsys" target="_blank" class="flex items-center gap-2">GitHub <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.008.069-.008 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clip-rule="evenodd" /></svg></a>
+            <a href="https://www.linkedin.com/in/dwij-malaviya-9014a82a6" target="_blank" class="flex items-center gap-2">LinkedIn <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14C2.239 0 0 2.239 0 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5V5c0-2.761-2.238-5-5-5zM7.119 20.452H3.558V9h3.561v11.452zM5.338 7.433c-1.137 0-2.06-.945-2.06-2.112 0-1.167.923-2.112 2.06-2.112 1.138 0 2.061.945 2.061 2.112 0 1.167-.923 2.112-2.061 2.112zM20.452 20.452h-3.561v-5.576c0-1.33-.027-3.039-1.852-3.039-1.853 0-2.136 1.446-2.136 2.941v5.674H9.342V9h3.415v1.561h.048c.476-.9 1.637-1.852 3.368-1.852 3.602 0 4.279 2.371 4.279 5.455v6.288z"/></svg></a>
         </div>
     </header>
 
@@ -87,14 +97,14 @@
                 <div class="step-card p-6 rounded-3xl bg-white/5 relative overflow-hidden group">
                     <div class="w-10 h-10 rounded-xl bg-indigo-500/10 flex items-center justify-center text-indigo-400 mb-6 font-bold">1</div>
                     <h3 class="text-lg font-bold text-white mb-2 uppercase">Initial Uplink</h3>
-                    <p class="text-sm text-gray-500 leading-relaxed">Choose an "Alias" (your temporary name) and either <strong>Create</strong> a new room or <strong>Join</strong> an existing one via a 6-character code.</p>
+                    <p class="text-sm text-gray-500 leading-relaxed">Pick an alias and <strong>Create</strong> a 12-char room (legacy 6-char still works) or <strong>Join</strong> with a shared code.</p>
                 </div>
 
                 <!-- Step 2 -->
                 <div class="step-card p-6 rounded-3xl bg-white/5 relative overflow-hidden group">
                     <div class="w-10 h-10 rounded-xl bg-indigo-500/10 flex items-center justify-center text-indigo-400 mb-6 font-bold">2</div>
                     <h3 class="text-lg font-bold text-white mb-2 uppercase">Secure Handshake</h3>
-                    <p class="text-sm text-gray-500 leading-relaxed mb-4">Once in the room, sync with your partner using a <strong>shared password</strong>. This derives your unique AES-256 session key locally on your device.</p>
+                    <p class="text-sm text-gray-500 leading-relaxed mb-4">Sync with a <strong>shared password</strong> to derive your AES-256 key locally; HKDF ratchets it per message.</p>
                     <p class="text-[10px] text-indigo-400 font-mono tracking-widest uppercase opacity-70">Note: If no shared key is established, messages can be decoded manually via the active cipher method.</p>
                 </div>
 
@@ -123,7 +133,7 @@
                         Desktop Optimized
                     </div>
                     <p class="text-sm text-gray-400 leading-relaxed mb-4">
-                        Nulvexor is engineered for **Desktop Environments**. For maximum performance of the Web Crypto API and to experience the full immersive cinematic UI, we recommend using a modern desktop browser (Chrome, Edge, or Firefox).
+                        Desktop-optimized for Web Crypto, CSP/HSTS, and the full cinematic UI. Use a modern desktop browser (Chrome, Edge, or Firefox).
                     </p>
                     <p class="text-[10px] text-gray-600 font-mono italic">MOBILE DEVICES MAY EXPERIENCE REDUCED GLOW FIDELITY.</p>
                 </div>

@@ -1,6 +1,8 @@
 <?php
 // room.php
-session_start();
+require_once __DIR__ . '/security.php';
+start_secure_session();
+send_security_headers();
 
 // [ROOM BURN SYSTEM] Prevent caching of the chat page to ensure history navigation checks file existence
 header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
@@ -55,7 +57,7 @@ if (!file_exists($filePath)) {
         }
     </script>
 </head>
-<body class="bg-[#0b0b0f] text-white h-dvh overflow-hidden flex flex-col">
+<body class="bg-[#0b0b0f] text-white h-dvh overflow-hidden flex flex-col room-view">
     <!-- Premium Ambient Glow System -->
     <div class="glow-ambient-wrapper"></div>
 
@@ -193,6 +195,26 @@ if (!file_exists($filePath)) {
                 </div>
             </div>
         </main>
+    </div>
+
+    <!-- Mobile Toolbar -->
+    <div class="mobile-toolbar md:hidden">
+        <button id="mtbMenu" aria-label="Toggle menu">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+            <span>Menu</span>
+        </button>
+        <button id="mtbKey" aria-label="Focus key">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a2 2 0 11-4 0 2 2 0 014 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7v10m-6 0h12"></path></svg>
+            <span>Key</span>
+        </button>
+        <button id="mtbBottom" aria-label="Jump to latest">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+            <span>Bottom</span>
+        </button>
+        <button id="mtbBurn" aria-label="Auto burn">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 14.828a4 4 0 01-5.656 0c-1.562-1.562-.777-5.303.707-6.364C10.5 7 9 3 9 3s4 2 5 6c1.914 0 3.5 1.5 3.5 3.5a3.5 3.5 0 11-7 0"></path></svg>
+            <span>Burn</span>
+        </button>
     </div>
 
     <script>

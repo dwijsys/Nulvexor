@@ -14,11 +14,11 @@ Nulvexor is a premium, high-security chat platform designed for absolute privacy
 
 ## ⚡ Quick Start
 
-1.  **Access the Grid**: Open [www.nulvexor.co.in](https://www.nulvexor.co.in) in your secure browser.
+1.  **Access the Grid**: Open [www.nulvexor.co.in](https://www.nulvexor.co.in) in a modern desktop browser.
 2.  **Establish Uplink**:
-    *   **Create Room**: Set your alias and generate an ephemeral room code.
-    *   **Join Room**: Enter the 6-character room code shared by your contact.
-3.  **Secure the Channel**: Select an encryption method (Password or Direct Key) and synchronize with your partner.
+    *   **Create Room**: Set your alias and generate a crypto-strong 12-character room code.
+    *   **Join Room**: Enter the shared 12-character code (legacy 6-character still works).
+3.  **Secure the Channel**: Use Password/Direct Key; HKDF ratchets a fresh key per message.
 
 ---
 
@@ -45,7 +45,8 @@ Nulvexor follows the same security standards as global agencies (NSA, CIA, RAW, 
 
 ### Setting up a Secure Session
 1.  **Alias**: Choose a temporary handle (e.g., `Neo`).
-2.  **Room Code**: Secure rooms are identified by a 6-character uppercase alphanumeric code.
+2.  **Room Code**: 12-character uppercase alphanumeric (legacy 6-character compatible).
+3.  **Hardening**: CSRF-protected forms, strict CSP/HSTS, secure cookies (HttpOnly/SameSite), and light rate limits on create/join.
 3.  **Key Synchronization**: 
     *   **Password Mode**: Both users must enter the exact same password to derive the AES-256 session key.
     *   **Manual Decoding**: If no shared key is established, messages can still be decoded using the current cipher method manually (e.g., Morse, Vigenere).

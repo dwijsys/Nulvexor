@@ -18,6 +18,13 @@ const agentsList         = document.getElementById('agentsList');
 const mobileMenuToggle   = document.getElementById('mobileMenuToggle');
 const mobileSidebar      = document.getElementById('mobileSidebar');
 const keyError           = document.getElementById('keyError');
+const mtbMenu            = document.getElementById('mtbMenu');
+const mtbKey             = document.getElementById('mtbKey');
+const mtbBottom          = document.getElementById('mtbBottom');
+const mtbBurn            = document.getElementById('mtbBurn');
+const guideNavToggle     = document.getElementById('guideNavToggle');
+const guideNavDrawer     = document.getElementById('guideNavDrawer');
+const guideNavBackdrop   = document.getElementById('guideNavBackdrop');
 
 // ── State ─────────────────────────────────────────────────────────────────────
 const displayedMessageIds = new Set();
@@ -213,7 +220,7 @@ async function renderMessage(msg) {
     const msgDiv = document.createElement('div');
     msgDiv.id = `msg-${msg.id}`;
     msgDiv.dataset.cipher = msg.cipher;
-    msgDiv.className = `flex ${isMine ? 'justify-end' : 'justify-start'} mb-6 opacity-0 transition-opacity duration-300 group`;
+    msgDiv.className = `flex ${isMine ? 'justify-end' : 'justify-start'} mb-4 opacity-0 transition-opacity duration-300 group`;
     
     let displayText = '';
     let isE2EE = false;
@@ -231,31 +238,28 @@ async function renderMessage(msg) {
             } else {
                 const displayMode = payload.cipher || 'nsa';
                 const modeLabels = {
-                    'nsa': 'NSA TOP SECRET',
-                    'raw': 'RAW CONFIDENTIAL',
-                    'fsb': 'FSB CLASSIFIED',
-                    'mossad': 'MOSSAD TARGETED',
-                    'dgse': 'DGSE BITSTREAM',
-                    'mi6': 'MI6 ENCRYPTED'
+                    'nsa': 'AES-GCM',
+                    'raw': 'MORSE',
+                    'fsb': 'ATBASH',
+                    'mossad': 'VIGENERE',
+                    'dgse': 'BINARY',
+                    'mi6': 'BASE64'
                 };
-                const modeLabel = modeLabels[displayMode] || (displayMode.toUpperCase() + ' SECURE DATA');
-                
-                // Use the true logic visual conversion from the payload
+                const modeLabel = modeLabels[displayMode] || displayMode.toUpperCase();
                 const disguise = payload.visual || '[SECURE DATA]';
 
                 displayText = `
-                    <div class="flex flex-col items-start gap-2 w-full">
-                         <div class="flex items-center gap-1.5 text-xs font-mono text-gray-400 uppercase tracking-widest">
-                            <span class="text-blue-400 text-xs">🔒</span>
-                            <span>${modeLabel}</span>
+                    <div class="cipher-row">
+                        <div class="cipher-head">
+                            <span class="cipher-lock">🔒</span>
+                            <span class="cipher-label">${modeLabel}</span>
                         </div>
-                        <div class="opacity-60 font-mono break-all text-[15px] leading-relaxed select-all p-2.5 rounded border border-white/5 w-full whitespace-pre-wrap">
-                            ${escapeHtml(disguise)}
-                        </div>
-                        <div class="inline-reveal-area mt-1">
-                            <button class="text-xs font-bold text-blue-400 border border-blue-500/30 px-4 py-2 rounded hover:bg-blue-600 hover:text-white transition-all uppercase reveal-trigger">
-                                Decrypt & Reveal
-                            </button>
+                        <div class="cipher-line">
+                            <span class="cipher-text">${escapeHtml(disguise)}</span>
+                            <div class="cipher-action">
+                                <input class="cipher-inline-input" placeholder="Key">
+                                <button class="cipher-decrypt-btn reveal-trigger">Decrypt</button>
+                            </div>
                         </div>
                     </div>
                 `;
@@ -267,40 +271,31 @@ async function renderMessage(msg) {
         displayText = escapeHtml(msg.cipher);
     }
 
+    const burnBadge = msg.burnTime > 0 ? `
+        <div class="burn-badge-sm">
+            <span class="emoji">🔥</span>
+            <span class="burn-countdown" data-expiry="${parseInt(msg.time) + parseInt(msg.burnTime)}">--:--</span>
+        </div>
+    ` : '';
+
     msgDiv.innerHTML = `
-        <div class="flex flex-col ${isMine ? 'items-end' : 'items-start'} max-w-[85%]">
+        <div class="flex flex-col ${isMine ? 'items-end' : 'items-start'} max-w-[88%]">
             <div class="flex items-center gap-2 mb-1 px-1">
-                <span class="text-sm font-bold text-gray-400 uppercase tracking-[0.2em]">${escapeHtml(msg.user)}${isMine ? ' <span class="text-blue-500">[YOU]</span>' : ''}</span>
-                <span class="text-sm font-mono text-gray-600">${formatTime(msg.time)}</span>
+                <span class="text-[12px] font-semibold text-gray-300 tracking-wide">${escapeHtml(msg.user)}${isMine ? ' · <span class="text-blue-400">YOU</span>' : ''}</span>
+                <span class="text-[12px] font-mono text-gray-500">${formatTime(msg.time)}</span>
             </div>
-            <div class="p-5 rounded-2xl ${isMine ? 'border border-blue-500/20 shadow-[0_0_20px_rgba(59,130,246,0.05)]' : 'border border-[#232329]'} relative group/bubble">
-                <div class="text-lg leading-relaxed ${isE2EE && !displayText.includes('reveal-trigger') ? 'text-white' : 'text-gray-400'}">
+            <div class="msg-bubble ${isMine ? 'msg-bubble-mine' : 'msg-bubble-other'} group/bubble">
+                <div class="msg-body ${isE2EE && !displayText.includes('reveal-trigger') ? 'text-white' : 'text-gray-200'}">
                     ${displayText}
+                </div>
+                <div class="msg-footer">
+                    <div class="flex items-center gap-2">${burnBadge}</div>
                     ${isE2EE && !displayText.includes('reveal-trigger') ? `
-                        <div class="mt-2 pt-2 border-t border-white/5 flex items-center justify-between">
-                            ${msg.burnTime > 0 ? `
-                                <div class="flex items-center gap-1.5 px-2 py-1 bg-orange-500/10 border border-orange-500/20 rounded-md">
-                                    <span class="text-[10px] animate-pulse">🔥</span>
-                                    <span class="text-xs font-bold text-orange-400 font-mono burn-countdown" data-expiry="${parseInt(msg.time) + parseInt(msg.burnTime)}">--:--</span>
-                                </div>
-                            ` : '<div></div>'}
-                            <button class="rehide-trigger text-xs font-bold text-gray-500 hover:text-blue-400 transition-all uppercase tracking-widest cursor-pointer">
-                                ↺ Hide Again
-                            </button>
-                        </div>
-                    ` : (msg.burnTime > 0 ? `
-                        <div class="mt-2 flex justify-start">
-                             <div class="flex items-center gap-1.5 px-2 py-1 bg-orange-500/10 border border-orange-500/20 rounded-md">
-                                <span class="text-[10px] animate-pulse">🔥</span>
-                                <span class="text-xs font-bold text-orange-400 font-mono burn-countdown" data-expiry="${parseInt(msg.time) + parseInt(msg.burnTime)}">--:--</span>
-                            </div>
-                        </div>
-                    ` : '')}
+                        <button class="rehide-trigger text-[11px] font-bold text-gray-400 hover:text-blue-400 transition-all uppercase tracking-widest cursor-pointer">Hide again</button>
+                    ` : ''}
                 </div>
                 ${isE2EE && !displayText.includes('reveal-trigger') ? `
-                    <button class="rehide-trigger absolute -top-2 -right-2 w-5 h-5 bg-dark-700 border border-white/10 rounded-full flex items-center justify-center text-[10px] text-gray-500 hover:text-white opacity-0 group-hover/bubble:opacity-100 transition-all shadow-xl" title="Re-hide message">
-                        ×
-                    </button>
+                    <button class="rehide-trigger absolute -top-2 -right-2 w-5 h-5 bg-dark-700 border border-white/10 rounded-full flex items-center justify-center text-[10px] text-gray-500 hover:text-white opacity-0 group-hover/bubble:opacity-100 transition-all shadow-xl" title="Re-hide message">×</button>
                 ` : ''}
             </div>
         </div>
@@ -334,8 +329,7 @@ secretMessageForm?.addEventListener('submit', async (e) => {
     if (!key) {
         sharedKeyInput.focus();
         sharedKeyInput.classList.add('auth-fail-effect', 'animate-shake');
-        keyError?.classList.remove('hidden');
-        showNotification('Shared key missing', 'warning', sharedKeyInput.parentElement);
+        // Keep only the red outline; suppress inline notification and label
         triggerGlowState('error'); 
         
         setTimeout(() => {
@@ -403,41 +397,34 @@ sharedKeyInput?.addEventListener('keydown', (e) => {
 messagesArea?.addEventListener('click', async e => {
     // 1. Reveal Plaintext (Now with Inline Entry)
     if (e.target.classList.contains('reveal-trigger')) {
-        const area = e.target.closest('.inline-reveal-area');
+        const bubble = e.target.closest('[id^="msg-"]');
+        const inlineInput = bubble?.querySelector('.cipher-inline-input');
+        const inlineKey = inlineInput?.value.trim();
         const globalKey = sharedKeyInput.value.trim();
+        const keyToUse = inlineKey || globalKey;
 
-        if (!globalKey) {
-            // IN-CHAT ENTRY: Switch button to input field (no prompt!)
-            area.innerHTML = `
-                <div class="inline-entry-container flex flex-col gap-1.5 mt-1 animate-fade-in">
-                    <div class="flex items-center gap-1">
-                        <input type="password" class="inline-key-input w-28 bg-black/60 border border-blue-500/30 rounded px-2.5 py-1.5 text-[11px] text-white outline-none focus:border-blue-500 transition-all" placeholder="DECRYPT KEY...">
-                        <button class="inline-confirm-btn bg-blue-600 hover:bg-blue-700 text-white px-3 py-1.5 rounded text-[10px] font-bold shadow-lg shadow-blue-500/20 transition-all uppercase tracking-wider">GO</button>
-                    </div>
-                    <div class="error-msg hidden text-[9px] font-bold text-red-500 flex items-center gap-1 px-1 uppercase tracking-widest">
-                        <span class="animate-pulse">⚠</span> Authentication Failed
-                    </div>
-                </div>
-            `;
-            const input = area.querySelector('.inline-key-input');
-            const btn = area.querySelector('.inline-confirm-btn');
-            input.focus();
-
-            // Clear error on type
-            input.addEventListener('input', () => {
-                input.classList.remove('auth-fail-effect');
-                btn?.classList.remove('auth-fail-btn');
-                area.querySelector('.error-msg')?.classList.add('hidden');
-            });
-            
-            // Handle 'Enter' inside the tiny input
-            input.addEventListener('keydown', ek => {
-                if (ek.key === 'Enter') area.querySelector('.inline-confirm-btn').click();
-            });
+        if (!keyToUse) {
+            inlineInput?.classList.add('auth-fail-effect');
+            inlineInput?.focus();
             return;
         }
-        
-        const msgId = e.target.closest('[id^="msg-"]').id.replace('msg-', '');
+
+        // Validate key before revealing
+        const cipher = bubble?.dataset.cipher;
+        const testPt = await E2EE.decrypt(cipher, keyToUse, ROOM_CODE);
+        if (testPt.includes('🔐')) {
+            const targetInput = inlineInput || sharedKeyInput;
+            targetInput?.classList.add('auth-fail-effect', 'animate-shake');
+            setTimeout(() => targetInput?.classList.remove('animate-shake'), 500);
+            triggerGlowState('error');
+            return;
+        }
+
+        if (inlineInput && !globalKey) {
+            sharedKeyInput.value = keyToUse;
+        }
+
+        const msgId = bubble.id.replace('msg-', '');
         revealedMessages.add(msgId);
         refreshMessages();
     }
@@ -447,27 +434,20 @@ messagesArea?.addEventListener('click', async e => {
         const input = e.target.parentElement.querySelector('.inline-key-input');
         const k = input.value.trim();
         if (k) {
-            // Validation: Quick test decryption
             const msgDiv = e.target.closest('[id^="msg-"]');
             const cipher = msgDiv.dataset.cipher;
             const testPt = await E2EE.decrypt(cipher, k, ROOM_CODE);
 
             if (testPt.includes('🔐')) {
                 const container = e.target.closest('.inline-entry-container');
-                const input = container.querySelector('.inline-key-input');
                 const errorLabel = container.querySelector('.error-msg');
-                
                 const btn = container.querySelector('.inline-confirm-btn');
-                
                 input.classList.add('auth-fail-effect');
                 btn?.classList.add('auth-fail-btn');
                 errorLabel.classList.remove('hidden');
                 triggerGlowState('error');
-                
-                // Shake effect
                 container.classList.add('animate-shake');
                 setTimeout(() => container.classList.remove('animate-shake'), 400);
-
                 input.focus();
                 return;
             }
@@ -538,6 +518,25 @@ mobileMenuToggle?.addEventListener('click', () => {
     document.getElementById('closeIcon')?.classList.toggle('hidden', !isSidebarOpen);
 });
 
+mtbMenu?.addEventListener('click', () => {
+    mobileMenuToggle?.click();
+});
+
+mtbKey?.addEventListener('click', () => {
+    sharedKeyInput?.focus();
+    sharedKeyInput?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+});
+
+mtbBottom?.addEventListener('click', () => {
+    if (!messagesArea) return;
+    messagesArea.scrollTo({ top: messagesArea.scrollHeight, behavior: 'smooth' });
+});
+
+mtbBurn?.addEventListener('click', () => {
+    burnTimeSelect?.focus();
+    burnTimeSelect?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+});
+
 // Close sidebar on message area click (Mobile)
 messagesArea?.addEventListener('click', () => {
     if (window.innerWidth < 768 && isSidebarOpen) {
@@ -556,6 +555,18 @@ window.addEventListener('resize', () => {
         mobileSidebar?.classList.add('-translate-x-full');
     }
 });
+
+// Guide mobile drawer
+if (guideNavToggle && guideNavDrawer && guideNavBackdrop) {
+    guideNavToggle.addEventListener('click', () => {
+        guideNavDrawer.classList.add('active');
+        guideNavBackdrop.classList.add('active');
+    });
+    guideNavBackdrop.addEventListener('click', () => {
+        guideNavDrawer.classList.remove('active');
+        guideNavBackdrop.classList.remove('active');
+    });
+}
 
 // ── Disconnect Logic (Room Burn System) ──────────────────────────────────────
 function burnRoomAndDisconnect() {

@@ -1,6 +1,8 @@
 <?php
 // verify_decrypt_code.php
-session_start();
+require_once __DIR__ . '/security.php';
+start_secure_session();
+send_security_headers();
 header('Content-Type: application/json');
 
 if (!isset($_SESSION['username']) || !isset($_SESSION['roomcode'])) {
