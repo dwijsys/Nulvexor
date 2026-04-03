@@ -220,6 +220,7 @@ if (!file_exists($filePath)) {
     <script>
         const CURRENT_USER = "<?php echo $username; ?>";
         const ROOM_CODE    = "<?php echo $roomCode; ?>";
+        const APP_BASE_URL = "<?php echo rtrim(dirname($_SERVER['SCRIPT_NAME']), '/\\'); ?>";
     </script>
     <script src="assets/e2ee.js"></script>
     <script src="assets/script.js"></script>

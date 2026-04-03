@@ -1,10 +1,12 @@
 <?php
 // fetch_messages.php
-session_start();
+require_once __DIR__ . '/security.php';
+start_secure_session();
 header('Content-Type: application/json');
 
 if (!isset($_SESSION['username']) || !isset($_SESSION['roomcode'])) {
-    echo json_encode(['status' => 'error', 'message' => 'Unauthorized']);
+    http_response_code(401);
+    echo json_encode(['status' => 'error', 'message' => 'Unauthorized', 'code' => 'SESSION_EXPIRED']);
     exit;
 }
 

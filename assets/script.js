@@ -42,6 +42,12 @@ let CURRENT_USER_ID = sessionStorage.getItem('nulv_uid') ||
     ('agent_' + Math.random().toString(36).slice(2, 9) + Date.now().toString(36));
 sessionStorage.setItem('nulv_uid', CURRENT_USER_ID);
 
+const API_BASE_URL = (typeof APP_BASE_URL === 'string' ? APP_BASE_URL : '').replace(/\/+$/, '');
+function apiUrl(path) {
+    const cleanPath = String(path || '').replace(/^\/+/, '');
+    return API_BASE_URL ? `${API_BASE_URL}/${cleanPath}` : `/${cleanPath}`;
+}
+
 // ── Helpers ───────────────────────────────────────────────────────────────────
 /**
  * Custom Notification System - Glassmorphic Toasts
@@ -164,7 +170,14 @@ async function fetchMessages() {
     if (isFetching) return;
     isFetching = true;
     try {
-        const res = await fetch(`fetch_messages?senderId=${CURRENT_USER_ID}`);
+        const endpoint = apiUrl('fetch_messages');
+        const url = new URL(endpoint, window.location.origin);
+        url.searchParams.set('senderId', CURRENT_USER_ID);
+
+        const res = await fetch(url.toString(), {
+            credentials: 'same-origin',
+            cache: 'no-store'
+        });
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
         const data = await res.json();
         
@@ -182,6 +195,8 @@ async function fetchMessages() {
             }
             if (autoScroll && messagesArea) messagesArea.scrollTop = messagesArea.scrollHeight;
             updateAgentsList(data.messages);
+        } else if (data.message === 'Unauthorized' || data.code === 'SESSION_EXPIRED') {
+            window.location.href = './?error=SessionExpired';
         } else if (data.message === 'Room not found' || data.message === 'Room expired') {
             // [ROOM BURN SYSTEM] Redirect if room is gone
             window.location.href = './?error=RoomExpired';
@@ -344,8 +359,12 @@ secretMessageForm?.addEventListener('submit', async (e) => {
     try {
         const encryptedPayload = await E2EE.encrypt(text, 'password', key, ROOM_CODE, sendIndex, mode);
         
-        const res = await fetch('send_message', {
+        const res = await fetch(apiUrl('send_message'), {
             method: 'POST',
+            credentials: 'same-origin',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+            },
             body: new URLSearchParams({
                 'message': encryptedPayload,
                 'cipherType': 'aes256',
@@ -364,6 +383,10 @@ secretMessageForm?.addEventListener('submit', async (e) => {
             validateInputs();
             fetchMessages();
         } else {
+            if (data.message === 'Unauthorized' || data.code === 'SESSION_EXPIRED') {
+                window.location.href = './?error=SessionExpired';
+                return;
+            }
             showNotification('SEND FAILED: ' + data.message, 'error');
             triggerGlowState('error'); // Trigger red glow on error
         }
@@ -572,11 +595,14 @@ if (guideNavToggle && guideNavDrawer && guideNavBackdrop) {
 function burnRoomAndDisconnect() {
     const data = new FormData();
     data.append('roomcode', ROOM_CODE);
-    navigator.sendBeacon('disconnect-room', data);
+    navigator.sendBeacon(apiUrl('disconnect-room'), data);
 }
 
 // Monitor for page exit / visibility change
-window.addEventListener('pagehide', burnRoomAndDisconnect);
+window.addEventListener('pagehide', (event) => {
+    if (event.persisted) return;
+    burnRoomAndDisconnect();
+});
 window.addEventListener('visibilitychange', () => {
     if (document.visibilityState === 'hidden') {
         // Optional: you could burn here too, but pagehide is safer for 'close'
