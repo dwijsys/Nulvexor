@@ -55,7 +55,7 @@
                 <span class="text-xl font-bold tracking-tighter text-white">NULVEXOR <span class="text-indigo-400 font-light ml-2">GUIDE</span></span>
             </a>
             <div class="flex items-center gap-3">
-                <a href="./" class="hidden md:inline-flex text-sm font-bold text-gray-500 hover:text-white transition-colors uppercase tracking-widest items-center gap-2">
+                <a href="./" class="inline-flex text-sm font-bold text-gray-500 hover:text-white transition-colors uppercase tracking-widest items-center gap-2">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
                     Return to Grid
                 </a>
@@ -97,22 +97,22 @@
                 <div class="step-card p-6 rounded-3xl bg-white/5 relative overflow-hidden group">
                     <div class="w-10 h-10 rounded-xl bg-indigo-500/10 flex items-center justify-center text-indigo-400 mb-6 font-bold">1</div>
                     <h3 class="text-lg font-bold text-white mb-2 uppercase">Initial Uplink</h3>
-                    <p class="text-sm text-gray-500 leading-relaxed">Pick an alias and <strong>Create</strong> a 12-char room (legacy 6-char still works) or <strong>Join</strong> with a shared code.</p>
+                    <p class="text-sm text-gray-500 leading-relaxed">Pick an alias and <strong>Create</strong> a 12-char room or <strong>Join</strong> with a shared code. Then share one secret key with all participants.</p>
                 </div>
 
                 <!-- Step 2 -->
                 <div class="step-card p-6 rounded-3xl bg-white/5 relative overflow-hidden group">
                     <div class="w-10 h-10 rounded-xl bg-indigo-500/10 flex items-center justify-center text-indigo-400 mb-6 font-bold">2</div>
                     <h3 class="text-lg font-bold text-white mb-2 uppercase">Secure Handshake</h3>
-                    <p class="text-sm text-gray-500 leading-relaxed mb-4">Sync with a <strong>shared password</strong> to derive your AES-256 key locally; HKDF ratchets it per message.</p>
-                    <p class="text-[10px] text-indigo-400 font-mono tracking-widest uppercase opacity-70">Note: If no shared key is established, messages can be decoded manually via the active cipher method.</p>
+                    <p class="text-sm text-gray-500 leading-relaxed mb-4">Every participant must enter the <strong>same shared key</strong> to derive the local AES-256 key; HKDF ratchets it per message.</p>
+                    <p class="text-[10px] text-indigo-400 font-mono tracking-widest uppercase opacity-70">Note: Decryption is only possible when the exact same shared key is present on both sides.</p>
                 </div>
 
                 <!-- Step 3 -->
                 <div class="step-card p-6 rounded-3xl bg-white/5 relative overflow-hidden group">
                     <div class="w-10 h-10 rounded-xl bg-indigo-500/10 flex items-center justify-center text-indigo-400 mb-6 font-bold">3</div>
                     <h3 class="text-lg font-bold text-white mb-2 uppercase">Full Transmission</h3>
-                    <p class="text-sm text-gray-500 leading-relaxed">Type your message and hit send. No data is ever stored on the server as plaintext. Every byte is encrypted before it leaves your browser.</p>
+                    <p class="text-sm text-gray-500 leading-relaxed">Type your message and hit send. Every byte is encrypted before leaving your browser, and recipients can decrypt only with the same shared key.</p>
                 </div>
             </div>
         </div>
@@ -177,7 +177,7 @@
                                         <span class="text-white font-bold text-sm sm:text-base">AES-256-GCM</span>
                                     </div>
                                 </td>
-                                <td class="p-8 text-gray-400 text-sm">NSA, TOP-SECRET Clearance</td>
+                                <td class="p-8 text-gray-400 text-sm">Core Secure Transport</td>
                                 <td class="p-8"><span class="px-3 py-1 bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 text-[10px] font-bold rounded-full uppercase">LEVEL 5 ACCESS</span></td>
                             </tr>
                             <tr class="border-b border-white/5 hover:bg-white/5 transition-colors group">

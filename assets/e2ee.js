@@ -144,19 +144,25 @@ const E2EE = (() => {
      */
     function applyCipherDisplay(text, mode, key = 'NULVEXOR') {
         switch (mode) {
-            case 'nsa':    return TrueLogic.vigenere(text, key);
-            case 'raw':    return TrueLogic.morse(text);
-            case 'fsb':    return TrueLogic.atbash(text);
-            case 'mossad': return TrueLogic.vigenere(text, key.split('').reverse().join('')); // Columnar-ish/Variant
-            case 'dgse':   return TrueLogic.binary(text);
-            case 'mi6':    return TrueLogic.caesar(text, 13);
+            case 'aes':
+            case 'nsa':       return TrueLogic.vigenere(text, key);
+            case 'morse':
+            case 'raw':       return TrueLogic.morse(text);
+            case 'serpent':
+            case 'fsb':       return TrueLogic.atbash(text);
+            case 'entropy':
+            case 'mossad':    return TrueLogic.vigenere(text, key.split('').reverse().join('')); // Columnar-ish/Variant
+            case 'bitstream':
+            case 'dgse':      return TrueLogic.binary(text);
+            case 'base64':
+            case 'mi6':       return TrueLogic.caesar(text, 13);
             default:       return TrueLogic.atbash(text);
         }
     }
 
     // ── Public API ───────────────────────────────────────────────────────────
 
-    async function encrypt(plaintext, method, secret, roomCode, index = 0, cipherMode = 'nsa') {
+    async function encrypt(plaintext, method, secret, roomCode, index = 0, cipherMode = 'aes') {
         try {
             const masterKey = await getMasterKey(secret, method, roomCode);
             const msgKey    = await deriveMessageKey(masterKey, index);

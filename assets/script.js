@@ -114,7 +114,7 @@ function showNotification(message, type = 'info', target = null) {
 }
 
 /**
- * Ambient Cinematic Glow Controller (Cyberpunk/NSA-Grade)
+ * Ambient Cinematic Glow Controller (Cyberpunk/Enterprise-Grade)
  */
 let glowRevertTimeout = null;
 
@@ -251,14 +251,20 @@ async function renderMessage(msg) {
             if (pt && !pt.includes('🔐')) {
                 displayText = escapeHtml(pt);
             } else {
-                const displayMode = payload.cipher || 'nsa';
+                const displayMode = payload.cipher || 'aes';
                 const modeLabels = {
+                    'aes': 'AES-GCM',
                     'nsa': 'AES-GCM',
-                    'raw': 'MORSE',
-                    'fsb': 'ATBASH',
-                    'mossad': 'VIGENERE',
-                    'dgse': 'BINARY',
-                    'mi6': 'BASE64'
+                    'morse': 'Morse Logic',
+                    'raw': 'Morse Logic',
+                    'serpent': 'Serpent Glyphs',
+                    'fsb': 'Serpent Glyphs',
+                    'entropy': 'High-Entropy',
+                    'mossad': 'High-Entropy',
+                    'bitstream': 'Bitstream',
+                    'dgse': 'Bitstream',
+                    'base64': 'Standard Base64',
+                    'mi6': 'Standard Base64'
                 };
                 const modeLabel = modeLabels[displayMode] || displayMode.toUpperCase();
                 const disguise = payload.visual || '[SECURE DATA]';

@@ -156,12 +156,12 @@ if (!file_exists($filePath)) {
                             <div class="relative">
                                 <label class="text-[11px] font-bold text-gray-500 uppercase tracking-widest mb-1 block ml-1">Cipher Mode</label>
                                 <select id="cipherModeSelect" class="bg-black/40 border border-[#232329] rounded-lg px-3 py-3 text-sm text-gray-300 focus:border-indigo-500/50 outline-none cursor-pointer">
-                                    <option value="nsa">NSA (AES-GCM)</option>
-                                    <option value="raw">RAW (Morse Logic)</option>
-                                    <option value="fsb">FSB (Serpent Glyphs)</option>
-                                    <option value="mossad">MOSSAD (High-Entropy)</option>
-                                    <option value="dgse">DGSE (Bitstream)</option>
-                                    <option value="mi6">MI6 (Standard Base64)</option>
+                                    <option value="aes">AES-GCM</option>
+                                    <option value="morse">Morse Logic</option>
+                                    <option value="serpent">Serpent Glyphs</option>
+                                    <option value="entropy">High-Entropy</option>
+                                    <option value="bitstream">Bitstream</option>
+                                    <option value="base64">Standard Base64</option>
                                 </select>
                             </div>
 

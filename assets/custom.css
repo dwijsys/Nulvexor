@@ -498,6 +498,35 @@ h1, h2, h3, h4 {
     height: 18px;
 }
 
+/* Disable all mobile menu elements */
+.mobile-nav-toggle {
+    display: none !important;
+}
+
+.mobile-nav-drawer {
+    display: none !important;
+}
+
+.mobile-nav-drawer.active {
+    display: none !important;
+}
+
+.mobile-nav-backdrop {
+    display: none !important;
+}
+
+.mobile-nav-backdrop.active {
+    display: none !important;
+}
+
+.mobile-toolbar {
+    display: none !important;
+}
+
+.guide-view .mobile-nav-toggle {
+    display: none !important;
+}
+
 .nav-links {
     display: flex;
     align-items: center;
@@ -1310,7 +1339,7 @@ input.auth-fail-effect:focus {
 }
 
 /* ============================================================
-   NULVEXOR PREMIUM AMBIENT GLOW SYSTEM (Cyberpunk / NSA-Grade)
+    NULVEXOR PREMIUM AMBIENT GLOW SYSTEM (Cyberpunk / Enterprise-Grade)
    ============================================================ */
 
 :root {
@@ -1437,4 +1466,267 @@ input.auth-fail-effect:focus {
   -----------------------------------------------------------------------------
 */
 
+/* ═══════════════════════════════════════════════════════════════════════════
+   MOBILE LANDING PAGE - PROFESSIONAL MOBILE NOTICE
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+#mobileLandingPage.mobile-notice-shell {
+    display: grid;
+    place-items: center;
+    padding: 24px;
+    background:
+        radial-gradient(1200px 700px at 100% -10%, rgba(14, 165, 233, 0.14), transparent 55%),
+        radial-gradient(900px 500px at -10% 100%, rgba(99, 102, 241, 0.12), transparent 60%),
+        #06080e;
+    overflow: hidden;
+    isolation: isolate;
+}
+
+#mobileLandingPage.mobile-notice-shell::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.03), transparent 40%),
+        repeating-linear-gradient(
+            90deg,
+            rgba(255, 255, 255, 0.015) 0,
+            rgba(255, 255, 255, 0.015) 1px,
+            transparent 1px,
+            transparent 44px
+        );
+    opacity: 0.28;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.mobile-notice-orb {
+    position: absolute;
+    border-radius: 9999px;
+    filter: blur(42px);
+    pointer-events: none;
+    opacity: 0.4;
+}
+
+.mobile-notice-orb--a {
+    width: 220px;
+    height: 220px;
+    top: -60px;
+    right: -40px;
+    background: rgba(99, 102, 241, 0.35);
+}
+
+.mobile-notice-orb--b {
+    width: 180px;
+    height: 180px;
+    bottom: -50px;
+    left: -30px;
+    background: rgba(56, 189, 248, 0.28);
+}
+
+.mobile-notice-card {
+    position: relative;
+    z-index: 2;
+    width: min(100%, 420px);
+    border-radius: 24px;
+    padding: 26px 22px 20px;
+    text-align: left;
+    background: linear-gradient(180deg, rgba(11, 15, 24, 0.96), rgba(9, 12, 20, 0.95));
+    border: 1px solid rgba(255, 255, 255, 0.11);
+    box-shadow: 0 28px 70px rgba(0, 0, 0, 0.58), 0 0 0 1px rgba(255, 255, 255, 0.03) inset;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+}
+
+.mobile-notice-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 16px;
+}
+
+.mobile-notice-branding {
+    min-width: 0;
+}
+
+.mobile-notice-logo {
+    width: 50px;
+    height: 50px;
+    margin: 0;
+    filter: drop-shadow(0 10px 20px rgba(99, 102, 241, 0.26));
+}
+
+.mobile-notice-kicker {
+    margin: 0;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #9eabff;
+    font-weight: 700;
+}
+
+.mobile-notice-subkicker {
+    margin: 4px 0 0;
+    color: #8f97b3;
+    font-size: 11px;
+    letter-spacing: 0.03em;
+}
+
+.mobile-notice-chip {
+    margin-left: auto;
+    display: inline-flex;
+    align-items: center;
+    height: 28px;
+    padding: 0 10px;
+    border-radius: 999px;
+    border: 1px solid rgba(56, 189, 248, 0.34);
+    background: rgba(56, 189, 248, 0.09);
+    color: #9edfff;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.mobile-notice-title {
+    margin: 0;
+    font-size: clamp(1.42rem, 4.6vw, 1.78rem);
+    line-height: 1.24;
+    color: #f5f7ff;
+    letter-spacing: -0.015em;
+    font-weight: 700;
+}
+
+.mobile-notice-text {
+    margin: 12px 0 0;
+    max-width: 36ch;
+    color: #b7c0d8;
+    font-size: 13px;
+    line-height: 1.7;
+}
+
+.mobile-notice-guide {
+    margin-top: 18px;
+    padding: 14px;
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.025);
+    border: 1px solid rgba(255, 255, 255, 0.09);
+    text-align: left;
+}
+
+.mobile-notice-guide-title {
+    margin: 0;
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #aeb9ff;
+    font-weight: 700;
+}
+
+.mobile-notice-guide-points {
+    margin-top: 9px;
+    display: grid;
+    gap: 6px;
+}
+
+.mobile-notice-guide-point {
+    margin: 0;
+    color: #bac3da;
+    font-size: 12px;
+    line-height: 1.58;
+}
+
+.mobile-notice-guide-link {
+    margin-top: 12px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 34px;
+    padding: 0 13px;
+    border-radius: 10px;
+    border: 1px solid rgba(99, 102, 241, 0.5);
+    background: rgba(99, 102, 241, 0.13);
+    color: #e2e8ff;
+    text-decoration: none;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.mobile-notice-guide-link:hover,
+.mobile-notice-guide-link:focus-visible {
+    color: #ffffff;
+    border-color: rgba(99, 102, 241, 0.65);
+    background: rgba(99, 102, 241, 0.18);
+    outline: none;
+}
+
+.mobile-notice-links {
+    margin-top: 16px;
+    padding-top: 14px;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    display: flex;
+    justify-content: flex-start;
+    gap: 10px;
+}
+
+.mobile-notice-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    background: rgba(255, 255, 255, 0.03);
+    color: #d5ddff;
+    text-decoration: none;
+}
+
+.mobile-notice-link--icon {
+    width: 42px;
+    height: 42px;
+    border-radius: 999px;
+    padding: 0;
+}
+
+.mobile-notice-link:hover,
+.mobile-notice-link:focus-visible {
+    color: #ffffff;
+    border-color: rgba(99, 102, 241, 0.5);
+    background: rgba(99, 102, 241, 0.13);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.36);
+    outline: none;
+}
+
+.mobile-notice-link svg {
+    width: 17px;
+    height: 17px;
+}
+
+/* Ensure desktop content is hidden on mobile */
+@media (max-width: 767px) {
+    body > nav,
+    body > section,
+    body > footer,
+    #desktopContent {
+        display: none !important;
+    }
+
+    #mobileLandingPage {
+        display: flex !important;
+    }
+}
+
+/* Desktop experience untouched */
+@media (min-width: 768px) {
+    #mobileLandingPage {
+        display: none !important;
+    }
+
+    #desktopContent {
+        display: block !important;
+    }
+}
 

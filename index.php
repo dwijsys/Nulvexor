@@ -43,6 +43,58 @@ $csrfToken = get_csrf_token();
     <div class="radial-glow top-0 left-1/4 -translate-x-1/2 opacity-50"></div>
     <div class="radial-glow bottom-0 right-0 opacity-30"></div>
 
+    <!-- MOBILE-ONLY LANDING PAGE -->
+    <div id="mobileLandingPage" class="md:hidden fixed inset-0 z-[9999] mobile-notice-shell" role="main" aria-labelledby="mobileNoticeTitle">
+        <div class="mobile-notice-orb mobile-notice-orb--a" aria-hidden="true"></div>
+        <div class="mobile-notice-orb mobile-notice-orb--b" aria-hidden="true"></div>
+
+        <section class="mobile-notice-card">
+            <header class="mobile-notice-header">
+                <img src="assets/logo.svg?v=2" alt="Nulvexor" class="mobile-notice-logo">
+                <div class="mobile-notice-branding">
+                    <p class="mobile-notice-kicker">NULVEXOR</p>
+                    <p class="mobile-notice-subkicker">Secure Communication Platform</p>
+                </div>
+                <span class="mobile-notice-chip">Desktop Preferred</span>
+            </header>
+
+            <h1 id="mobileNoticeTitle" class="mobile-notice-title">Mobile Experience Is Coming Soon</h1>
+
+            <p class="mobile-notice-text">
+                For the full encrypted workflow and complete controls, please access Nulvexor on desktop for now. Thank you for your understanding.
+            </p>
+
+            <div class="mobile-notice-guide" aria-label="Quick guide">
+                <h2 class="mobile-notice-guide-title">Quick Guide</h2>
+                <div class="mobile-notice-guide-points">
+                    <p class="mobile-notice-guide-point">1. Create or join a room using a secure room code.</p>
+                    <p class="mobile-notice-guide-point">2. Share the encryption key privately with participants.</p>
+                    <p class="mobile-notice-guide-point">3. Exchange protected messages with burn timers.</p>
+                </div>
+                <a href="guide" class="mobile-notice-guide-link" aria-label="Open Nulvexor guide">
+                    Read Full Guide
+                </a>
+            </div>
+
+            <div class="mobile-notice-links" aria-label="Social links">
+                <a href="https://github.com/dwijsys" target="_blank" rel="noopener noreferrer" class="mobile-notice-link mobile-notice-link--icon" aria-label="GitHub profile">
+                    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                        <path fill-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.008.069-.008 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clip-rule="evenodd" />
+                    </svg>
+                </a>
+
+                <a href="https://www.linkedin.com/in/dwij-malaviya-9014a82a6" target="_blank" rel="noopener noreferrer" class="mobile-notice-link mobile-notice-link--icon" aria-label="LinkedIn profile">
+                    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                        <path d="M19 0h-14C2.239 0 0 2.239 0 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5V5c0-2.761-2.238-5-5-5zM7.119 20.452H3.558V9h3.561v11.452zM5.338 7.433c-1.137 0-2.06-.945-2.06-2.112 0-1.167.923-2.112 2.06-2.112 1.138 0 2.061.945 2.061 2.112 0 1.167-.923 2.112-2.061 2.112zM20.452 20.452h-3.561v-5.576c0-1.33-.027-3.039-1.852-3.039-1.853 0-2.136 1.446-2.136 2.941v5.674H9.342V9h3.415v1.561h.048c.476-.9 1.637-1.852 3.368-1.852 3.602 0 4.279 2.371 4.279 5.455v6.288z"/>
+                    </svg>
+                </a>
+            </div>
+        </section>
+    </div>
+
+    <!-- DESKTOP CONTENT (HIDDEN ON MOBILE) -->
+    <div id="desktopContent" class="hidden md:block">
+
     <!-- Navbar -->
     <nav class="nav-glass fixed top-0 w-full z-50 px-6 box-border">
         <div class="max-w-7xl mx-auto nav-height flex items-center justify-between">
@@ -159,27 +211,27 @@ $csrfToken = get_csrf_token();
                     <div class="feature-icon-container">
                         <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
                     </div>
-                    <h3 class="text-xl font-bold text-white mb-3">E2EE Handshake</h3>
+                    <h3 class="text-xl font-bold text-white mb-3">Secure Handshake</h3>
                     <p class="text-gray-400 text-sm leading-relaxed">
-                        AES-256-GCM + HKDF, zero plaintext at rest, CSRF-guarded forms, and strict CSP/HSTS headers.
+                        AES-256-GCM with HKDF ratcheting, zero plaintext storage, CSRF-protected forms, and hardened CSP/HSTS headers.
                     </p>
                 </div>
                 <div class="feature-card group">
                     <div class="feature-icon-container">
                         <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path></svg>
                     </div>
-                    <h3 class="text-xl font-bold text-white mb-3">Ambient Intelligence</h3>
+                    <h3 class="text-xl font-bold text-white mb-3">Realtime Crypto Signals</h3>
                     <p class="text-gray-400 text-sm leading-relaxed">
-                        Visualizing cryptographic states through a cinematic ambient glow system. Real-time feedback for sending, receiving, and decryption.
+                        Live visual indicators track send, receive, and decrypt states so operators can monitor message flow instantly.
                     </p>
                 </div>
                 <div class="feature-card group">
                     <div class="feature-icon-container">
                         <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                     </div>
-                    <h3 class="text-xl font-bold text-white mb-3">Ephemeral Sessions</h3>
+                    <h3 class="text-xl font-bold text-white mb-3">Ephemeral Message Lifecycle</h3>
                     <p class="text-gray-400 text-sm leading-relaxed">
-                        All communications are purged upon refresh or room closure. Automatic message self-destruction ensures no digital footprint remains.
+                        Rooms and messages are automatically purged by session state and burn timers to minimize persistence.
                     </p>
                 </div>
             </div>
@@ -277,7 +329,6 @@ $csrfToken = get_csrf_token();
                     <div class="action-body">
                         <h3 class="action-title">Join Presence</h3>
                         <p class="action-sub">Authenticate into an active room using the shared code. Session purges on disconnect.</p>
-                        <p class="text-xs text-gray-600">12-character codes preferred; 6-character legacy still accepted.</p>
                         <div class="action-metrics">
                             <div class="metric-pill">
                                 <span class="label">SYNC</span>
@@ -298,9 +349,8 @@ $csrfToken = get_csrf_token();
                         </label>
                         <label class="action-label">
                             Room Code
-                            <input type="text" id="join_roomcode" name="roomcode" autocomplete="off" placeholder="XXXXXXXXXXXX" maxlength="12" class="action-input uppercase tracking-widest font-bold" aria-describedby="room-code-help">
+                            <input type="text" id="join_roomcode" name="roomcode" autocomplete="off" placeholder="XXXXXXXXXXXX" maxlength="12" class="action-input uppercase tracking-widest font-bold">
                         </label>
-                        <p id="room-code-help" class="text-xs text-gray-500">Accepts new 12-character codes and legacy 6-character codes.</p>
                         <button type="submit" class="action-btn action-btn--secondary">Synchronize Uplink</button>
                         <div id="joinRoomForm-error" class="error-container hidden"></div>
                     </form>
@@ -347,7 +397,7 @@ $csrfToken = get_csrf_token();
             a.addEventListener('click', closeMobileNav);
         });
 
-        // Ambient Cinematic Glow Controller (Cyberpunk/NSA-Grade)
+        // Ambient Cinematic Glow Controller (Cyberpunk/Enterprise-Grade)
         let glowRevertTimeout = null;
         function triggerGlowState(state) {
             const wrapper = document.querySelector('.glow-ambient-wrapper');
@@ -434,5 +484,7 @@ $csrfToken = get_csrf_token();
             });
         });
     </script>
+
+    </div><!-- End desktopContent -->
 </body>
 </html>
