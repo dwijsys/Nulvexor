@@ -1471,15 +1471,23 @@ input.auth-fail-effect:focus {
    ═══════════════════════════════════════════════════════════════════════════ */
 
 #mobileLandingPage.mobile-notice-shell {
-    display: grid;
-    place-items: center;
-    padding: 24px;
+    --mobile-shell-padding: clamp(10px, 4vw, 24px);
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100vw;
+    max-width: 100%;
+    min-height: 100vh;
+    height: 100vh;
+    min-height: 100dvh;
+    height: 100dvh;
+    padding: var(--mobile-shell-padding);
     background:
         radial-gradient(1200px 700px at 100% -10%, rgba(14, 165, 233, 0.14), transparent 55%),
         radial-gradient(900px 500px at -10% 100%, rgba(99, 102, 241, 0.12), transparent 60%),
         #06080e;
-    overflow-x: hidden;
-    overflow-y: auto;
+    overflow: hidden;
     isolation: isolate;
 }
 
@@ -1530,23 +1538,27 @@ input.auth-fail-effect:focus {
     z-index: 2;
     box-sizing: border-box;
     width: min(100%, 420px);
-    max-width: 420px;
-    border-radius: 24px;
-    padding: 26px 22px 20px;
+    max-width: 100%;
+    max-height: calc(100dvh - (var(--mobile-shell-padding) * 2));
+    margin: 0 auto;
+    border-radius: clamp(16px, 4vw, 24px);
+    padding: clamp(16px, 3.8vw, 26px) clamp(14px, 4vw, 22px) clamp(14px, 3.2vw, 20px);
     text-align: left;
     background: linear-gradient(180deg, rgba(11, 15, 24, 0.96), rgba(9, 12, 20, 0.95));
     border: 1px solid rgba(255, 255, 255, 0.11);
     box-shadow: 0 28px 70px rgba(0, 0, 0, 0.58), 0 0 0 1px rgba(255, 255, 255, 0.03) inset;
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
+    overflow-x: hidden;
+    overflow-y: auto;
 }
 
 .mobile-notice-header {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: clamp(8px, 2.8vw, 12px);
     flex-wrap: wrap;
-    margin-bottom: 16px;
+    margin-bottom: clamp(10px, 3vw, 16px);
 }
 
 .mobile-notice-branding {
@@ -1554,15 +1566,15 @@ input.auth-fail-effect:focus {
 }
 
 .mobile-notice-logo {
-    width: 50px;
-    height: 50px;
+    width: clamp(40px, 12vw, 50px);
+    height: clamp(40px, 12vw, 50px);
     margin: 0;
     filter: drop-shadow(0 10px 20px rgba(99, 102, 241, 0.26));
 }
 
 .mobile-notice-kicker {
     margin: 0;
-    font-size: 10px;
+    font-size: clamp(9px, 2.6vw, 10px);
     letter-spacing: 0.2em;
     text-transform: uppercase;
     color: #9eabff;
@@ -1572,7 +1584,7 @@ input.auth-fail-effect:focus {
 .mobile-notice-subkicker {
     margin: 4px 0 0;
     color: #8f97b3;
-    font-size: 11px;
+    font-size: clamp(10px, 3vw, 11px);
     letter-spacing: 0.03em;
 }
 
@@ -1580,13 +1592,13 @@ input.auth-fail-effect:focus {
     margin-left: auto;
     display: inline-flex;
     align-items: center;
-    height: 28px;
-    padding: 0 10px;
+    height: clamp(24px, 7vw, 28px);
+    padding: 0 clamp(8px, 2.8vw, 10px);
     border-radius: 999px;
     border: 1px solid rgba(56, 189, 248, 0.34);
     background: rgba(56, 189, 248, 0.09);
     color: #9edfff;
-    font-size: 10px;
+    font-size: clamp(9px, 2.6vw, 10px);
     font-weight: 700;
     letter-spacing: 0.08em;
     text-transform: uppercase;
@@ -1594,7 +1606,7 @@ input.auth-fail-effect:focus {
 
 .mobile-notice-title {
     margin: 0;
-    font-size: clamp(1.42rem, 4.6vw, 1.78rem);
+    font-size: clamp(1.2rem, 5vw, 1.78rem);
     line-height: 1.24;
     color: #f5f7ff;
     letter-spacing: -0.015em;
@@ -1602,16 +1614,16 @@ input.auth-fail-effect:focus {
 }
 
 .mobile-notice-text {
-    margin: 12px 0 0;
+    margin: clamp(8px, 3vw, 12px) 0 0;
     max-width: 36ch;
     color: #b7c0d8;
-    font-size: 13px;
-    line-height: 1.7;
+    font-size: clamp(12px, 3.3vw, 13px);
+    line-height: 1.62;
 }
 
 .mobile-notice-guide {
-    margin-top: 18px;
-    padding: 14px;
+    margin-top: clamp(10px, 3.5vw, 18px);
+    padding: clamp(10px, 3.5vw, 14px);
     border-radius: 14px;
     background: rgba(255, 255, 255, 0.025);
     border: 1px solid rgba(255, 255, 255, 0.09);
@@ -1620,7 +1632,7 @@ input.auth-fail-effect:focus {
 
 .mobile-notice-guide-title {
     margin: 0;
-    font-size: 12px;
+    font-size: clamp(10px, 2.8vw, 12px);
     letter-spacing: 0.12em;
     text-transform: uppercase;
     color: #aeb9ff;
@@ -1628,31 +1640,31 @@ input.auth-fail-effect:focus {
 }
 
 .mobile-notice-guide-points {
-    margin-top: 9px;
+    margin-top: clamp(6px, 2.4vw, 9px);
     display: grid;
-    gap: 6px;
+    gap: clamp(4px, 1.8vw, 6px);
 }
 
 .mobile-notice-guide-point {
     margin: 0;
     color: #bac3da;
-    font-size: 12px;
-    line-height: 1.58;
+    font-size: clamp(11px, 3vw, 12px);
+    line-height: 1.52;
 }
 
 .mobile-notice-guide-link {
-    margin-top: 12px;
+    margin-top: clamp(8px, 3vw, 12px);
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    min-height: 34px;
-    padding: 0 13px;
+    min-height: clamp(30px, 7.8vw, 34px);
+    padding: 0 clamp(10px, 3vw, 13px);
     border-radius: 10px;
     border: 1px solid rgba(99, 102, 241, 0.5);
     background: rgba(99, 102, 241, 0.13);
     color: #e2e8ff;
     text-decoration: none;
-    font-size: 11px;
+    font-size: clamp(10px, 2.8vw, 11px);
     font-weight: 700;
     letter-spacing: 0.08em;
     text-transform: uppercase;
@@ -1667,8 +1679,8 @@ input.auth-fail-effect:focus {
 }
 
 .mobile-notice-links {
-    margin-top: 16px;
-    padding-top: 14px;
+    margin-top: clamp(10px, 3.5vw, 16px);
+    padding-top: clamp(10px, 3vw, 14px);
     border-top: 1px solid rgba(255, 255, 255, 0.08);
     display: flex;
     justify-content: flex-start;
@@ -1680,19 +1692,19 @@ input.auth-fail-effect:focus {
     align-items: center;
     justify-content: center;
     gap: 8px;
-    padding: 10px 12px;
+    padding: clamp(8px, 2.8vw, 10px) clamp(10px, 3vw, 12px);
     border-radius: 12px;
     border: 1px solid rgba(255, 255, 255, 0.14);
     background: rgba(255, 255, 255, 0.03);
     color: #d5ddff;
     text-decoration: none;
-    font-size: 12px;
+    font-size: clamp(11px, 2.9vw, 12px);
     font-weight: 600;
 }
 
 .mobile-notice-link--icon {
-    width: 42px;
-    height: 42px;
+    width: clamp(34px, 10vw, 42px);
+    height: clamp(34px, 10vw, 42px);
     border-radius: 999px;
     padding: 0;
 }
@@ -1712,7 +1724,19 @@ input.auth-fail-effect:focus {
 }
 
 /* Ensure desktop content is hidden on mobile */
-@media (max-width: 767px) {
+@media (max-width: 768px) {
+    html,
+    body {
+        width: 100%;
+        max-width: 100%;
+        overflow-x: hidden;
+    }
+
+    body {
+        min-height: 100vh;
+        min-height: 100dvh;
+    }
+
     body > nav,
     body > section,
     body > footer,
@@ -1720,17 +1744,103 @@ input.auth-fail-effect:focus {
         display: none !important;
     }
 
-    #mobileLandingPage.mobile-notice-shell {
-        padding: 16px;
-    }
-
     #mobileLandingPage {
         display: flex !important;
+        width: 100vw;
+        max-width: 100%;
+    }
+
+    #mobileLandingPage.mobile-notice-shell {
+        --mobile-shell-padding: clamp(10px, 4vw, 20px);
+    }
+
+    .mobile-notice-card {
+        width: min(100%, 460px);
+    }
+}
+
+@media (max-width: 414px) {
+    #mobileLandingPage.mobile-notice-shell {
+        --mobile-shell-padding: 12px;
+    }
+
+    .mobile-notice-card {
+        padding: 18px 16px 14px;
+    }
+
+    .mobile-notice-chip {
+        margin-left: 0;
+    }
+}
+
+@media (max-width: 375px) {
+    #mobileLandingPage.mobile-notice-shell {
+        --mobile-shell-padding: 10px;
+    }
+
+    .mobile-notice-card {
+        padding: 16px 14px 13px;
+    }
+
+    .mobile-notice-title {
+        font-size: clamp(1.08rem, 5.8vw, 1.35rem);
+        line-height: 1.22;
+    }
+
+    .mobile-notice-guide-link {
+        width: 100%;
+    }
+}
+
+@media (max-width: 320px) {
+    .mobile-notice-card {
+        padding: 14px 12px 12px;
+    }
+
+    .mobile-notice-logo {
+        width: 40px;
+        height: 40px;
+    }
+
+    .mobile-notice-text {
+        line-height: 1.52;
+    }
+
+    .mobile-notice-guide {
+        padding: 10px;
+    }
+
+    .mobile-notice-guide-point {
+        font-size: 10.5px;
+    }
+
+    .mobile-notice-guide-link {
+        min-height: 30px;
+        font-size: 9.5px;
+    }
+}
+
+@media (max-width: 768px) and (max-height: 740px) {
+    .mobile-notice-header {
+        margin-bottom: 12px;
+    }
+
+    .mobile-notice-text {
+        margin-top: 10px;
+    }
+
+    .mobile-notice-guide {
+        margin-top: 12px;
+    }
+
+    .mobile-notice-links {
+        margin-top: 12px;
+        padding-top: 12px;
     }
 }
 
 /* Desktop experience untouched */
-@media (min-width: 768px) {
+@media (min-width: 769px) {
     #mobileLandingPage {
         display: none !important;
     }
