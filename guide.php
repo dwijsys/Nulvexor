@@ -217,7 +217,7 @@
     </main>
 
     <footer class="py-12 px-6 border-t border-white/5 text-center mt-20">
-        <p class="text-xs text-gray-600 tracking-widest uppercase">© 2026 NULVEXOR PROTOCOL — ABSOLUTE SECRECY GUARANTEED</p>
+        <p class="text-xs text-gray-600 tracking-widest uppercase">© 2026 NULVEXOR PROTOCOL — ABSOLUTE SECRECY GUARANTEED. PARENT COMPANY: CLOAKFORT PROTOCOL.</p>
     </footer>
 
 </body>

@@ -356,7 +356,7 @@ $csrfToken = get_csrf_token();
                 <img src="assets/logo.svg?v=2" alt="Nulvexor" class="w-6 h-6">
                 <span class="text-sm font-bold tracking-widest">NULVEXOR</span>
             </a>
-            <p class="text-xs text-gray-600">© 2026 Nulvexor Protocol — Zero Knowledge Platform</p>
+            <p class="text-xs text-gray-600">© 2026 Nulvexor Protocol — Zero Knowledge Platform. Parent company: Cloakfort Protocol.</p>
         </div>
     </footer>
 
