@@ -356,7 +356,7 @@ $csrfToken = get_csrf_token();
                 <img src="assets/logo.svg?v=2" alt="Nulvexor" class="w-6 h-6">
                 <span class="text-sm font-bold tracking-widest">NULVEXOR</span>
             </a>
-            <p class="text-xs text-gray-600">© 2026 Nulvexor Protocol — Zero Knowledge Platform. Parent company: Cloakfort Protocol.</p>
+            <p class="text-xs text-gray-600">&copy; 2026 CLOAKFORT PROTOCOL</p>
         </div>
     </footer>
 
@@ -389,17 +389,33 @@ $csrfToken = get_csrf_token();
 
         // Ambient Cinematic Glow Controller (Cyberpunk/Enterprise-Grade)
         let glowRevertTimeout = null;
+        const GLOW_STATE_CLASSES = ['state-sending', 'state-receiving', 'state-error', 'state-warning'];
+        const GLOW_REVERT_MS = 4200;
+
         function triggerGlowState(state) {
             const wrapper = document.querySelector('.glow-ambient-wrapper');
             if (!wrapper) return;
+
             clearTimeout(glowRevertTimeout);
-            wrapper.classList.remove('state-sending', 'state-receiving', 'state-error');
-            if (state !== 'default') {
-                wrapper.classList.add(`state-${state}`);
-                glowRevertTimeout = setTimeout(() => {
-                    wrapper.classList.remove(`state-${state}`);
-                }, 3000);
+
+            const targetClass = state && state !== 'default' ? `state-${state}` : null;
+            if (!targetClass || !GLOW_STATE_CLASSES.includes(targetClass)) {
+                wrapper.classList.remove(...GLOW_STATE_CLASSES);
+                return;
             }
+
+            const otherStateClasses = GLOW_STATE_CLASSES.filter((cssClass) => cssClass !== targetClass);
+            wrapper.classList.remove(...otherStateClasses);
+
+            // Avoid remove/add flicker when the same state is re-triggered rapidly.
+            if (!wrapper.classList.contains(targetClass)) {
+                wrapper.classList.add(targetClass);
+            }
+
+            // Auto-revert to idle deep blue after the state color has settled.
+            glowRevertTimeout = setTimeout(() => {
+                wrapper.classList.remove(targetClass);
+            }, GLOW_REVERT_MS);
         }
 
         // Professional Form Validation Logic

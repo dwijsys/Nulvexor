@@ -1344,41 +1344,76 @@ input.auth-fail-effect:focus {
     NULVEXOR PREMIUM AMBIENT GLOW SYSTEM (Cyberpunk / Enterprise-Grade)
    ============================================================ */
 
+@property --glow-primary {
+    syntax: '<color>';
+    inherits: true;
+    initial-value: rgba(0, 102, 255, 0.12);
+}
+
+@property --glow-secondary {
+    syntax: '<color>';
+    inherits: true;
+    initial-value: rgba(30, 144, 255, 0.08);
+}
+
+@property --glow-primary-soft {
+    syntax: '<color>';
+    inherits: true;
+    initial-value: rgba(0, 102, 255, 0.08);
+}
+
+@property --glow-secondary-soft {
+    syntax: '<color>';
+    inherits: true;
+    initial-value: rgba(30, 144, 255, 0.06);
+}
+
 :root {
     /* Base theme alignment - Dark Navy/Black */
     --glow-bg-app: #05070f;
     
     /* Core Glow Colors (Idle State) - Professional Deep Blues */
-    --glow-primary: rgba(0, 102, 255, 0.12);   /* #0066ff */
-    --glow-secondary: rgba(30, 144, 255, 0.08); /* #1e90ff */
-    --glow-primary-soft: rgba(0, 102, 255, 0.08);
-    --glow-secondary-soft: rgba(30, 144, 255, 0.06);
+    --glow-idle-primary: rgba(0, 102, 255, 0.12);   /* #0066ff */
+    --glow-idle-secondary: rgba(30, 144, 255, 0.08); /* #1e90ff */
+    --glow-idle-primary-soft: rgba(0, 102, 255, 0.08);
+    --glow-idle-secondary-soft: rgba(30, 144, 255, 0.06);
+    --glow-primary: var(--glow-idle-primary);
+    --glow-secondary: var(--glow-idle-secondary);
+    --glow-primary-soft: var(--glow-idle-primary-soft);
+    --glow-secondary-soft: var(--glow-idle-secondary-soft);
     
     /* Animation Timing */
-    --glow-transition: 1.2s cubic-bezier(0.22, 1, 0.36, 1);
-    --glow-color-transition: 1.45s cubic-bezier(0.22, 1, 0.36, 1);
+    --glow-transition: 1.85s cubic-bezier(0.16, 1, 0.3, 1);
+    --glow-color-transition: 2.55s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 /* State Modifiers */
 .glow-ambient-wrapper.state-sending {
-    --glow-primary: rgba(59, 130, 246, 0.25);   /* #3b82f6 - Electric Blue */
-    --glow-secondary: rgba(29, 78, 216, 0.15);  /* #1d4ed8 - Deep Blue */
-    --glow-primary-soft: rgba(59, 130, 246, 0.12);
-    --glow-secondary-soft: rgba(29, 78, 216, 0.1);
+    --glow-primary: rgba(59, 130, 246, 0.19);   /* #3b82f6 - Electric Blue */
+    --glow-secondary: rgba(29, 78, 216, 0.11);  /* #1d4ed8 - Deep Blue */
+    --glow-primary-soft: rgba(59, 130, 246, 0.09);
+    --glow-secondary-soft: rgba(29, 78, 216, 0.07);
 }
 
 .glow-ambient-wrapper.state-receiving {
-    --glow-primary: rgba(16, 185, 129, 0.25);   /* #10b981 - Secure Green */
-    --glow-secondary: rgba(5, 150, 105, 0.15);  /* #059669 - Deep Green */
-    --glow-primary-soft: rgba(16, 185, 129, 0.12);
-    --glow-secondary-soft: rgba(5, 150, 105, 0.1);
+    --glow-primary: rgba(16, 185, 129, 0.19);   /* #10b981 - Secure Green */
+    --glow-secondary: rgba(5, 150, 105, 0.11);  /* #059669 - Deep Green */
+    --glow-primary-soft: rgba(16, 185, 129, 0.09);
+    --glow-secondary-soft: rgba(5, 150, 105, 0.07);
 }
 
 .glow-ambient-wrapper.state-error {
-    --glow-primary: rgba(239, 68, 68, 0.25);    /* #ef4444 - Alert Red */
-    --glow-secondary: rgba(185, 28, 28, 0.15);  /* #b91c1c - Deep Red */
-    --glow-primary-soft: rgba(239, 68, 68, 0.12);
-    --glow-secondary-soft: rgba(185, 28, 28, 0.1);
+    --glow-primary: rgba(239, 68, 68, 0.19);    /* #ef4444 - Alert Red */
+    --glow-secondary: rgba(185, 28, 28, 0.11);  /* #b91c1c - Deep Red */
+    --glow-primary-soft: rgba(239, 68, 68, 0.09);
+    --glow-secondary-soft: rgba(185, 28, 28, 0.07);
+}
+
+.glow-ambient-wrapper.state-warning {
+    --glow-primary: rgba(245, 158, 11, 0.18);   /* #f59e0b - Amber */
+    --glow-secondary: rgba(217, 119, 6, 0.1);   /* #d97706 - Deep Amber */
+    --glow-primary-soft: rgba(245, 158, 11, 0.08);
+    --glow-secondary-soft: rgba(217, 119, 6, 0.06);
 }
 
 /* 
@@ -1393,7 +1428,12 @@ input.auth-fail-effect:focus {
     pointer-events: none;
     z-index: 9999;
     overflow: hidden;
-    transition: var(--glow-transition);
+    transition:
+        opacity var(--glow-transition),
+        --glow-primary var(--glow-color-transition),
+        --glow-secondary var(--glow-color-transition),
+        --glow-primary-soft var(--glow-color-transition),
+        --glow-secondary-soft var(--glow-color-transition);
 }
 
 /* Layer 1: The structured, subtle frame (Vignette) */
@@ -1402,13 +1442,13 @@ input.auth-fail-effect:focus {
     position: absolute;
     inset: 0;
     box-shadow: 
-        inset 0 0 160px var(--glow-primary-soft),
-        inset 0 0 108px var(--glow-primary),
-        inset 0 0 48px var(--glow-secondary);
-    opacity: 0.78;
-    filter: blur(0.2px);
-    animation: breathing-inset 16s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
-    transition: box-shadow var(--glow-color-transition), opacity var(--glow-transition), filter var(--glow-transition);
+        inset 0 0 210px var(--glow-primary-soft),
+        inset 0 0 138px var(--glow-primary),
+        inset 0 0 72px var(--glow-secondary);
+    opacity: 0.7;
+    filter: blur(1.4px);
+    animation: breathing-inset 20s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
+    transition: box-shadow var(--glow-color-transition), opacity var(--glow-transition), filter var(--glow-transition), transform var(--glow-transition);
 }
 
 /* Layer 2: The flowing, radial ambient backdrop */
@@ -1416,20 +1456,21 @@ input.auth-fail-effect:focus {
     content: '';
     position: absolute;
     /* Expanded footprint for smooth liquid flow across the screen */
-    inset: -120px;
+    inset: -170px;
     background: radial-gradient(
-        circle at 50% 50%,
-        transparent 54%,
-        var(--glow-primary-soft) 72%,
-        var(--glow-primary) 86%,
-        var(--glow-secondary-soft) 94%,
+        ellipse at 50% 50%,
+        transparent 52%,
+        transparent 68%,
+        var(--glow-primary-soft) 78%,
+        var(--glow-primary) 89%,
+        var(--glow-secondary-soft) 95%,
         var(--glow-secondary) 100%
     );
-    background-size: 175% 175%;
-    opacity: 0.54;
-    filter: blur(14px);
-    animation: wave-flow 24s cubic-bezier(0.4, 0, 0.2, 1) infinite;
-    transition: background var(--glow-color-transition), opacity var(--glow-transition), filter var(--glow-transition);
+    background-size: 205% 205%;
+    opacity: 0.42;
+    filter: blur(28px);
+    animation: wave-flow 32s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+    transition: background var(--glow-color-transition), opacity var(--glow-transition), filter var(--glow-transition), transform var(--glow-transition);
 }
 
 /* Animations */
@@ -1442,8 +1483,8 @@ input.auth-fail-effect:focus {
 }
 
 @keyframes breathing-inset {
-    0%, 100% { opacity: 0.68; transform: scale(1); }
-    50% { opacity: 0.9; transform: scale(1.0015); }
+    0%, 100% { opacity: 0.61; transform: scale(1); }
+    50% { opacity: 0.77; transform: scale(1.0011); }
 }
 
 /* 

@@ -117,6 +117,8 @@ function showNotification(message, type = 'info', target = null) {
  * Ambient Cinematic Glow Controller (Cyberpunk/Enterprise-Grade)
  */
 let glowRevertTimeout = null;
+const GLOW_STATE_CLASSES = ['state-sending', 'state-receiving', 'state-error', 'state-warning'];
+const GLOW_REVERT_MS = 4200;
 
 function triggerGlowState(state) {
     const wrapper = document.querySelector('.glow-ambient-wrapper');
@@ -124,19 +126,25 @@ function triggerGlowState(state) {
 
     // Clear any existing reset timer
     clearTimeout(glowRevertTimeout);
-    
-    // Reset to idle before applying new state
-    wrapper.classList.remove('state-sending', 'state-receiving', 'state-error');
-    
-    // Apply state if not aiming for default
-    if (state !== 'default') {
-        wrapper.classList.add(`state-${state}`);
-        
-        // Auto-revert back to default deep blue trace after 3 seconds
-        glowRevertTimeout = setTimeout(() => {
-            wrapper.classList.remove(`state-${state}`);
-        }, 3000);
+
+    const targetClass = state && state !== 'default' ? `state-${state}` : null;
+    if (!targetClass || !GLOW_STATE_CLASSES.includes(targetClass)) {
+        wrapper.classList.remove(...GLOW_STATE_CLASSES);
+        return;
     }
+
+    const otherStateClasses = GLOW_STATE_CLASSES.filter((cssClass) => cssClass !== targetClass);
+    wrapper.classList.remove(...otherStateClasses);
+
+    // Avoid remove/add flicker when the same state is re-triggered rapidly.
+    if (!wrapper.classList.contains(targetClass)) {
+        wrapper.classList.add(targetClass);
+    }
+
+    // Auto-revert to idle deep blue after the state color has settled.
+    glowRevertTimeout = setTimeout(() => {
+        wrapper.classList.remove(targetClass);
+    }, GLOW_REVERT_MS);
 }
 
 function escapeHtml(str) {

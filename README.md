@@ -82,5 +82,5 @@ Nulvexor follows the same security standards as global agencies (NSA, CIA, RAW, 
 
 ---
 
-© 2026 NULVEXOR PROTOCOL. Parent company: Cloakfort Protocol. All Rights Reserved.
+© 2026 CLOAKFORT PROTOCOL
 [www.nulvexor.co.in](https://www.nulvexor.co.in)
