@@ -351,7 +351,7 @@ $csrfToken = get_csrf_token();
 
     <!-- Footer -->
     <footer class="py-12 px-6 border-t border-white/5 bg-black/50 text-center">
-        <div class="max-w-7xl mx-auto flex flex-col items-center gap-6">
+        <div class="max-w-7xl mx-auto flex items-center justify-center gap-6">
             <a href="./" class="flex items-center gap-2 opacity-50 hover:opacity-100 transition-opacity">
                 <img src="assets/logo.svg?v=2" alt="Nulvexor" class="w-6 h-6">
                 <span class="text-sm font-bold tracking-widest">NULVEXOR</span>
