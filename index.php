@@ -58,10 +58,10 @@ $csrfToken = get_csrf_token();
                 <span class="mobile-notice-chip">Desktop Preferred</span>
             </header>
 
-            <h1 id="mobileNoticeTitle" class="mobile-notice-title">Mobile Experience Is Coming Soon</h1>
+            <h1 id="mobileNoticeTitle" class="mobile-notice-title">Mobile Experience Currently Unavailable</h1>
 
             <p class="mobile-notice-text">
-                For the full encrypted workflow and complete controls, please access Nulvexor on desktop for now. Thank you for your understanding.
+                We're actively developing and refining the mobile experience to meet our security and usability standards. Mobile view is not currently viable for encrypted communications. Please access Nulvexor on desktop to use the platform.
             </p>
 
             <div class="mobile-notice-guide" aria-label="Quick guide">
