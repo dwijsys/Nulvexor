@@ -287,7 +287,7 @@ async function renderMessage(msg) {
                             <span class="cipher-text">${escapeHtml(disguise)}</span>
                             <div class="cipher-action">
                                 <input class="cipher-inline-input" placeholder="Key">
-                                <button class="cipher-decrypt-btn reveal-trigger">Decrypt</button>
+                                <button class="cipher-decrypt-btn reveal-trigger">🔓</button>
                             </div>
                         </div>
                     </div>
